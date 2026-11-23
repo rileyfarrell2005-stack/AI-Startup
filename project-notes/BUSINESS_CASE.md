@@ -56,4 +56,17 @@ To reduce these risks, I would use secure payment processing, data backups, stro
 
 ## 6. Risks and ethics
 
-What could go wrong — for your customers, their data, or society? What would you do about it?
+**What could go wrong — for your customers, their data, or society? What would you do about it?**
+
+There are several risks associated with operating this platform, particularly because customers are trusting independent technicians to enter their homes and repair expensive household appliances.
+
+One major risk is customer safety and trust. A technician could be inexperienced, unreliable or potentially dishonest. To reduce this risk, the platform could require technicians to verify their identities, provide proof of relevant qualifications and maintain customer ratings and reviews.
+
+Another concern is data privacy and cybersecurity. The platform would collect personal information such as customer names, addresses, contact information, payment details and previous repair records. If this information were exposed through a data breach, customers could face privacy and financial risks. To prevent this, the business should use secure payment providers, encryption, limited access to customer information and regular security updates.
+
+There is also a risk of unfair pricing and misleading advertising. Some technicians could advertise low prices to attract customers and then charge significantly more once they arrive. The platform should encourage transparent pricing, clearly explain when additional charges may apply and provide a way for customers to report misleading listings.
+
+Finally, there is the risk of platform reliability. If the application experiences technical problems or shows inaccurate technician availability, customers could waste valuable time trying to arrange repairs. Regular maintenance, accurate listing updates and reliable cloud services would help reduce this problem.
+
+From an ethical perspective, the business has a responsibility to protect customer information, treat technicians fairly and provide customers with honest information so they can make informed decisions. The platform should not prioritize advertising revenue over customer safety or the quality of repair services.
+
