@@ -52,7 +52,7 @@ My prototype demonstrates this concept through its technician listings and servi
 
 Although a competitor can copy the application itself, the real competitive advantage would come from the network of technicians and customers using the platform. The website and its features are relatively easy to **replicate**, but establishing **disruptive technology** for a repair service network and gaining customer trust would take more time.
 
-Using the **VRIN framework**, the business could develop several competitive advantages. First, it provides **value** by helping customers find available technicians, compare prices and arrange repairs more efficiently. It also provides value to independent technicians by giving them another way to advertise their services and generate business. Second, the platform could become **rare** if it establishes a strong network of local technicians with verified qualifications, competitive pricing and reliable availability. Third, it would become more difficult to **imitate** as the business develops relationships with technicians, collects customer reviews and builds a history of completed repairs. Finally, the platform would need to be properly **organized** to take advantage of these resources through reliable listings, customer support, technician verification and an effective booking system.
+Using the **resource based view**, the business could develop several competitive advantages. First, it provides **value** by helping customers find available technicians, compare prices and arrange repairs more efficiently. It also provides value to independent technicians by giving them another way to advertise their services and generate business. Second, the platform could become **rare** if it establishes a strong network of local technicians with verified qualifications, competitive pricing and reliable availability. Third, it would become more difficult to **imitate** as the business develops relationships with technicians, collects customer reviews and builds a history of completed repairs. Finally, the platform would need to be properly **organized** to take advantage of these resources through reliable listings, customer support, technician verification and an effective booking system.
 
 A competitor with a larger budget could potentially develop a similar application and spend more money on advertising to attract customers. However, they would still need to recruit independent technicians, establish relationships with them, build customer trust and collect enough reviews to become a reliable alternative. Depending on the market, this could take months or even years to develop into an established network. Having a larger advertising budget does not automatically mean customers will trust or prefer their platform.
 
@@ -64,25 +64,23 @@ Ultimately, the competitive advantage is not the technology itself, but the esta
 
 What would it take to run this for real? Which parts would you buy as cloud services (SaaS, PaaS, IaaS), and what are the risks of relying on them?
 
-I would use PaaS (Platform as a Service) to host and manage the application, customer accounts, technician listings and database. This would allow the platform to grow as more customers and technicians join without having to manage all the underlying infrastructure.
+If I were running this business as a real service, I’d use a **PaaS (Platform as a Service) provider** to host the app and manage its database, customer accounts and technician listings. That way, the platform could handle more users as the business grows, without the company having to buy and maintain its own servers. I’d also use **SaaS (Software as a Service)** tools for payments, email, and customer support. Using existing services would let me spend more time running the business instead of building every system from scratch.
 
-There are also risks associated with relying on cloud services. These include service outages, cybersecurity threats, customer information being compromised and increasing subscription costs as the platform grows. The business would also depend on third-party providers to keep important parts of the application operating.
+I would buy these as a cloud service to take some of the weight off my shoulders, in which they would help keep the platform running as smooth as possible, while making it more dependable for both customers and technicians.
 
-To reduce these risks, I would use secure payment processing, data backups, strong account security and reputable cloud providers. This would help protect customer information and keep the platform operating reliably.
+However, relying on third-party providers creates  additional risks. If a cloud provider experiences an outage, customers might temporarily lose access to technician listings or booking services. If a provider increases its prices, operating costs could become more expensive and reduce the business's profitability. These risks make it important to consider the advantages and disadvantages of these services in order to not cause a mess, To reduce these risks, I would maintain regular data backups, have alternative service providers available where possible and avoid depending entirely on one company for essential operations.
 
 ## 6. Risks and ethics
 
 **What could go wrong — for your customers, their data, or society? What would you do about it?**
 
-There are several risks associated with operating this platform, particularly because customers are trusting independent technicians to enter their homes and repair expensive household appliances.
 
-One major risk is customer safety and trust. A technician could be inexperienced, unreliable or potentially dishonest. To reduce this risk, the platform could require technicians to verify their identities, provide proof of relevant qualifications and maintain customer ratings and reviews.
+One risk is the customer hires an inexperienced or dishonest person, especially since these people would be entering their homes. To avoid this I would have the technicians verify their identity and qualifications before advertising on the app. Customer reviews would also help people decide who they feel comfortable to hire.
 
-Another concern is data privacy and cybersecurity. The platform would collect personal information such as customer names, addresses, contact information, payment details and previous repair records. If this information were exposed through a data breach, customers could face privacy and financial risks. To prevent this, the business should use secure payment providers, encryption, limited access to customer information and regular security updates.
+It would also hold personal information such as home addresses, phone numbers and payment details. “If this information was stolen it could put customers at risk.”I would use secure payment services and make sure that personal information is protected properly.
 
-There is also a risk of unfair pricing and misleading advertising. Some technicians could advertise low prices to attract customers and then charge significantly more once they arrive. The platform should encourage transparent pricing, clearly explain when additional charges may apply and provide a way for customers to report misleading listings.
+Another problem is price. This would allow a tech to advertize a low price to get people in the door, but charge a lot more once they’re there.I like to know that technicians are upfront on their prices and any other costs before a customer agrees to a repair.
 
-Finally, there is the risk of platform reliability. If the application experiences technical problems or shows inaccurate technician availability, customers could waste valuable time trying to arrange repairs. Regular maintenance, accurate listing updates and reliable cloud services would help reduce this problem.
+The app may also have technical problems, or show technicians as available when they are not. When someone needs an appliance repaired it might be a waste of their time.Updating listings and maintaining the application may help with this.
 
-From an ethical perspective, the business has a responsibility to protect customer information, treat technicians fairly and provide customers with honest information so they can make informed decisions. The platform should not prioritize advertising revenue over customer safety or the quality of repair services.
-
+“The business should make money by offering a useful service, not by allowing misleading advertisements or putting customers at risk.
