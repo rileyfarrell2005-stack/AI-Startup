@@ -1,0 +1,25 @@
+/* Auth screen injected by the Node server. */
+body.auth-locked .app-frame > main,
+body.auth-locked .app-frame > .bottom-nav,
+body.auth-locked .app-frame > .site-footer { display: none !important; }
+.auth-gate { max-width: 470px; margin: 35px auto; padding: 26px; border: 1px solid var(--border, #f0d7d2); border-radius: 16px; background: white; box-shadow: 0 8px 26px #633a3312; }
+.auth-gate h1 { margin: 0 0 8px; font-size: 1.8rem; }
+.auth-gate > p { color: #746b68; }
+.auth-tabs { display: flex; gap: 8px; margin: 16px 0; }
+.auth-tabs button { flex: 1; padding: 10px; border: 1px solid #f0d7d2; border-radius: 9px; background: white; color: #746b68; font: inherit; font-weight: 700; cursor: pointer; }
+.auth-tabs button[aria-selected="true"] { border-color: #b94b43; background: #fff0ed; color: #963b35; }
+.auth-form { display: grid; gap: 13px; }
+.auth-form label { display: grid; gap: 6px; font-weight: 700; font-size: .9rem; }
+.auth-form input, .auth-form select { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #dfd4d1; border-radius: 9px; font: inherit; }
+.auth-form .button { margin: 3px 0 0; }
+.auth-error { min-height: 1.35em; margin: 0; color: #963b35 !important; font-size: .88rem; font-weight: 700; }
+.auth-note { margin: 16px 0 0; color: #746b68; font-size: .79rem; }
+.auth-account-bar { display: flex; align-items: center; justify-content: flex-end; gap: 11px; padding: 8px 20px; color: #746b68; font-size: .83rem; }
+.auth-account-bar button { padding: 6px 11px; border: 1px solid #e8c5bd; border-radius: 8px; background: white; color: #963b35; font: inherit; font-weight: 700; cursor: pointer; }
+.auth-error-banner { max-width: 930px; margin: 10px auto; padding: 10px 14px; border-radius: 9px; background: #fff0ed; color: #963b35; }
+body[data-account-role="customer"] .bottom-nav a[data-tab="provider"] { display: none; }
+body[data-account-role="technician"] .bottom-nav a[data-tab="services"] { display: none; }
+body[data-account-role="technician"] #home .customer-choice,
+body[data-account-role="technician"] #home .help-choice { display: none; }
+body[data-account-role="customer"] #home .technician-choice { display: none; }
+@media (max-width: 600px) { .auth-gate { margin: 20px 14px; padding: 20px; } .auth-account-bar { justify-content: space-between; } }
