@@ -1,6 +1,6 @@
 // FixerUpper authentication server.
 // Passwords are bcrypt-hashed; sessions are server-side and stored in SQLite.
-// Run behind HTTPS in production and set SESSION_SECRET to a long random secret.
+// Production must use HTTPS and a trusted, configured public origin.
 "use strict";
 
 const crypto = require("node:crypto");
@@ -19,12 +19,21 @@ const PORT = Number(process.env.PORT || 3000);
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const DATA_DIR = process.env.FIXERUPPER_DATA_DIR || path.join(__dirname, ".fixerupper-data");
+const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN || "";
 
 if (IS_PRODUCTION && (!SESSION_SECRET || SESSION_SECRET.length < 32)) {
   throw new Error("Set SESSION_SECRET to a random value at least 32 characters long in production.");
 }
 if (!SESSION_SECRET && !IS_PRODUCTION) {
   console.warn("Using a development-only session secret. Set SESSION_SECRET before deployment.");
+}
+let publicUrl = null;
+if (IS_PRODUCTION) {
+  try { publicUrl = new URL(PUBLIC_ORIGIN); }
+  catch (error) { throw new Error("Set PUBLIC_ORIGIN to your site's full HTTPS origin, for example https://fixerupper.example.com."); }
+  if (publicUrl.protocol !== "https:" || publicUrl.pathname !== "/" || publicUrl.search || publicUrl.hash || publicUrl.username || publicUrl.password) {
+    throw new Error("PUBLIC_ORIGIN must be a plain HTTPS origin, such as https://fixerupper.example.com.");
+  }
 }
 fs.mkdirSync(DATA_DIR, { recursive: true, mode: 0o700 });
 
@@ -44,6 +53,8 @@ const findUserByEmail = db.prepare("SELECT id, email, password_hash, role FROM u
 const findPublicUser = db.prepare("SELECT id, email, role FROM users WHERE id = ?");
 const createUser = db.prepare("INSERT INTO users (id, email, password_hash, role, created_at) VALUES (?, ?, ?, ?, ?)");
 
+// Only enable this when the hosting provider's trusted reverse proxy overwrites
+// X-Forwarded-Proto. Never trust arbitrary client-provided forwarding headers.
 if (process.env.TRUST_PROXY === "1") app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(helmet({
@@ -60,6 +71,21 @@ app.use(helmet({
     }
   }
 }));
+
+// In production, always redirect HTTP and alternate hostnames to the exact
+// configured HTTPS origin. The redirect destination is never built from the
+// untrusted Host header, which avoids open-redirect attacks.
+if (IS_PRODUCTION) {
+  const canonicalHost = publicUrl.host.toLowerCase();
+  app.use(function (req, res, next) {
+    const requestHost = (req.get("host") || "").toLowerCase();
+    if (!req.secure || requestHost !== canonicalHost) {
+      return res.redirect(308, PUBLIC_ORIGIN.replace(/\/$/, "") + req.originalUrl);
+    }
+    next();
+  });
+}
+
 app.use(express.json({ limit: "10kb", type: "application/json" }));
 app.use(session({
   name: "fixerupper.sid",
@@ -169,7 +195,6 @@ app.post("/api/auth/login", authLimiter, csrfProtection, async function (req, re
       return res.status(401).json({ error: "Email or password is incorrect." });
     }
     const user = findUserByEmail.get(email);
-    // Compare a dummy bcrypt hash on unknown email to reduce timing-based enumeration.
     const dummyHash = "$2a$12$C6UzMDM.H6dfI/f/IKcEe.5JQv6cFQO2yP4uM/2Q8VJq6F9z2h7Je";
     const matches = await bcrypt.compare(password, user ? user.password_hash : dummyHash);
     if (!user || !matches) return res.status(401).json({ error: "Email or password is incorrect." });
@@ -193,8 +218,6 @@ app.post("/api/auth/logout", csrfProtection, function (req, res, next) {
   });
 });
 
-// Example role-protected endpoints. Apply requireAuth + requireRole to every
-// future customer/technician data API; client-side visibility is not security.
 app.get("/api/customer/account", requireAuth, requireRole("customer"), function (req, res) {
   res.json({ user: req.user });
 });
@@ -202,7 +225,6 @@ app.get("/api/technician/account", requireAuth, requireRole("technician"), funct
   res.json({ user: req.user });
 });
 
-// Keep local database files and server source out of static responses.
 app.use(function (req, res, next) {
   if (/^\/(?:\.fixerupper-data|server\.js|package(?:-lock)?\.json|\.git)(?:\/|$)/i.test(req.path)) return res.sendStatus(404);
   if (req.path === "/index.html") return res.redirect(302, "/");
