@@ -19,10 +19,10 @@ Copy this block for each session.
   1. can you add a code for my website, called fixerupper which is an online appliance repair service where both customers and technicians can interact
   2. so next we will work on how the app works, it will bring you to a homescreen that has 3 options at the bottom . "request services" , " provide services" and the third one being settings/customer help, once you chose the one that applies to you by clicking on the screen, you are redirected to a screen of listings for available resources and filters to filter out any service providers you may not be seeking at this particular monet, the app colour will be read which will be bordered around the app in a light but easy to read fashion, searches will provide the people in your area that have the quickest time to come repair your appliance, the filters in the app will help make this work, in order to book you click a book service button once you click on someones profile and fill out a brief statement of the problem and what appliance has the problem, they will then come back with a quote for the work and the customer will decide whether they would like the service or not, they are able to rate technicians and the app does not meet with customers, just the people who use it
      
-- **What worked:**
-- **What broke, and how we fixed it:**
-- **Committed?** yes / no — commit message:
-
+- **What worked:** The apparent code is correct.
+- **What broke, and how we fixed it:** no issues yet
+- **Committed?** yes / no — commit message: 
+yes
 ### Session — [date] — driver: [first name]
 
 - **Goal for this session:**
