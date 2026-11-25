@@ -84,3 +84,5 @@ Another problem is price. This would allow a tech to advertize a low price to ge
 The app may also have technical problems, or show technicians as available when they are not. When someone needs an appliance repaired it might be a waste of their time.Updating listings and maintaining the application may help with this.
 
 “The business should make money by offering a useful service, not by allowing misleading advertisements or putting customers at risk.
+
+**this project was created with the use of Artificial Intelligence, All rights are reserved**
