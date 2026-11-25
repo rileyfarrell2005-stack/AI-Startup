@@ -1,0 +1,12 @@
+/* Simulated account sign-in activity panel. */
+.account-activity-panel { max-width: 780px; margin: 20px 0; padding: 18px; border: 1px solid var(--border, #f0d7d2); border-radius: 14px; background: #fff; box-shadow: 0 6px 22px #6c39350d; }
+.account-activity-panel h2 { margin: 0 0 10px; font-size: 1.25rem; }
+.account-activity-panel h3 { margin: 0 0 7px; font-size: 1rem; }
+.activity-disclaimer { padding: 10px 12px; border-radius: 9px; background: #fff4e5; color: #70511e; font-size: .85rem; }
+.activity-history { display: grid; gap: 9px; margin: 15px 0; }
+.activity-entry { padding: 12px; border: 1px solid #eee2df; border-radius: 10px; }
+.activity-entry p { margin: 0 0 4px; color: #746b68; font-size: .85rem; }
+.activity-entry p:last-child { margin-bottom: 0; }
+.current-session { border-color: #cfe2cb; background: #f7fbf5; }
+.activity-date { font-weight: 750; }
+.activity-note { color: #746b68; font-size: .82rem; }

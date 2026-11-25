@@ -171,9 +171,6 @@ app.post("/api/auth/login", authLimiter, csrfProtection, async function (req, re
     const dummyHash = "$2a$12$C6UzMDM.H6dfI/f/IKcEe.5JQv6F9z2h7Je";
     const matches = await bcrypt.compare(password, user ? user.password_hash : dummyHash);
     if (!user || !matches) return res.status(401).json({ error: "Email or password is incorrect." });
-
-    // Demo only: the code is returned to the browser for display, not delivered
-    // through an independent channel, so this is not genuine two-factor auth.
     await regenerateSession(req);
     const demoCode = String(crypto.randomInt(0, 1000000)).padStart(6, "0");
     req.session.pendingVerificationUserId = user.id;
@@ -182,11 +179,7 @@ app.post("/api/auth/login", authLimiter, csrfProtection, async function (req, re
     req.session.pendingVerificationAttempts = 0;
     req.session.csrfToken = crypto.randomBytes(32).toString("hex");
     await saveSession(req);
-    res.set("Cache-Control", "no-store").json({
-      requiresDemoVerification: true,
-      demoVerificationCode: demoCode,
-      csrfToken: req.session.csrfToken
-    });
+    res.set("Cache-Control", "no-store").json({ requiresDemoVerification: true, demoVerificationCode: demoCode, csrfToken: req.session.csrfToken });
   } catch (error) { next(error); }
 });
 
@@ -251,8 +244,8 @@ app.use(function (req, res, next) {
 app.get("/", function (req, res, next) {
   fs.readFile(path.join(__dirname, "index.html"), "utf8", function (error, html) {
     if (error) return next(error);
-    const injectedHead = '<link rel="stylesheet" href="/auth.css">';
-    const injectedBody = '<script src="/auth-client.js" defer></script><script src="/compare.js" defer></script>';
+    const injectedHead = '<link rel="stylesheet" href="/auth.css"><link rel="stylesheet" href="/account-activity.css">';
+    const injectedBody = '<script src="/auth-client.js" defer></script><script src="/account-activity.js" defer></script><script src="/compare.js" defer></script>';
     html = html.replace(/<body([^>]*)>/i, '<body class="auth-locked"$1>');
     html = html.replace(/<\/head>/i, injectedHead + "</head>");
     html = html.replace(/<\/body>/i, injectedBody + "</body>");
