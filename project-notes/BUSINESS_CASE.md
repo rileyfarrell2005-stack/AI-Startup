@@ -4,22 +4,31 @@ Your prototype shows *what* the product looks like. This document explains *why*
 
 ## 1. The idea
 
-- **Customer:** Homeowners and anyone who has appliances.
-- **Problem:** Problem is sometimes it is difficult to have someone come fix appliances in a timely manner
-- **Solution:** connect available mechanics with the best prices to people who need specific appliances repaired
-- **Revenue:** the money is gained from a revenue share for the app posting these advertisements
+- **Customer:**One specific customer for this app?
+- **Problem:** what is their current problem?
+- **Solution:** how they solve the current problem now , what we do better?
+- **Revenue:** who pays the platform owner?
+
+**Customer:** Homeowners and people who own appliances that need repairs.
+
+**Problem:** Finding someone to repair an appliance can be difficult sometimes, especially when local technicians are busy or unavailable for several weeks at a time. Customers often have to seek their options out online, ask friends for recommendations or contact several repair businesses before finding someone who can help in a timely manner. This can take time, which people do not have if an essential appliance is in need of repair, as well as it can be difficult to compare prices and availability if everything is not centeralized.
+
+**Solution:** FixerUpper is a platform that connects customers with independent appliance repair technicians. Customers can search for technicians based on their location, the type of appliance they can repair and their availability on specific dates. They can then submit a repair request, receive quotes and decide which technician best suits their needs at the given time. This  than having to contact several businesses individually, customers can find and compare options in one place.
+
+**Revenue:** The business would make money through advertising and revenue-sharing arrangements with technicians who use the platform to promote their services. This gives independent technicians another way to reach potential customers while generating income for FixerUpper.
+  
 
 ## 2. Where IT creates value
 
 Which parts of the value chain does your product change, and how? Which course concepts apply (e.g. scale, distribution channels, differentiation, data, switching costs)?
 
-This product creates value by improving the scale of appliance repair businesses. Instead of relying mainly on word of mouth / local advertising / reputation, start-up technicians can use the platform to reach a larger customer base and generate more opportunities. This allows start-up technicians to compete with larger companies without needing to spend as much money on advertising.
+This product creates **value** by improving the scale of appliance repair businesses. Instead of relying mainly on word of mouth / local advertising / reputation, start-up technicians can use the platform to reach a larger customer base and generate more opportunities. This allows start-up technicians to compete with larger companies without needing to spend as much money on advertising.
 
-Distribution channels are where the application provides technicians with another way to advertise their services and allows customers to find available repair professionals on one centralized platform. This makes the process increasingly convenient for both the technician, and the customer.
+**Distribution channels** are where the application provides technicians with another way to advertise their services and allows customers to find available repair professionals on one centralized platform. This makes the process increasingly convenient for both the technician, and the customer.
 
 The platform also creates value through data. By tracking previous repair requests and fulfilled orders, appliance information and customer history, the application could make it easier for returning customers to access their repair records and find technicians who have experience with specific appliances based on past performance with new and returning customers.
 
-Finally, the application could create switching costs. A customer may normally rely on a local technician or someone they know, but that person may not be available to come for several weeks. By having a platform that connects customers with multiple technicians, competitive pricing and easier booking. Over time, saved repair histories and previous bookings could make customers more likely to continue using the application rather than returning to their previous methods of finding repair services. This has a network effect by growing its value to each customer as more people use this app.
+Finally, the application could create **switching costs**. A customer may normally rely on a local technician or someone they know, but that person may not be available to come for several weeks. By having a platform that connects customers with multiple technicians, competitive pricing and easier booking. Over time, saved repair histories and previous bookings could make customers more likely to continue using the application rather than returning to their previous methods of finding repair services. This has a network effect by growing its value to each customer as more people use this app.
 
 ## 3. Network effects
 
