@@ -27,6 +27,46 @@
     return node;
   }
   function findTechnician(id) { return TECHNICIANS.find(function (person) { return person.id === id; }); }
+  function localDateString(date) {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+  function getAvailableDates(person) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return (person.availableDateOffsets || []).filter(function (offset) {
+      return Number.isInteger(offset) && offset >= 0 && offset <= 30;
+    }).map(function (offset) {
+      const date = new Date(today);
+      date.setDate(date.getDate() + offset);
+      return localDateString(date);
+    });
+  }
+  function formatPreferredDate(dateValue) {
+    if (!dateValue) return "Date not selected";
+    const date = new Date(dateValue + "T00:00:00");
+    if (Number.isNaN(date.getTime())) return dateValue;
+    return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+  function populateAvailableDates(person) {
+    const dateSelect = document.getElementById("preferred-date");
+    dateSelect.replaceChildren();
+    const prompt = document.createElement("option");
+    prompt.value = "";
+    prompt.textContent = "Choose an available date";
+    dateSelect.appendChild(prompt);
+    getAvailableDates(person).forEach(function (dateValue) {
+      const option = document.createElement("option");
+      option.value = dateValue;
+      option.textContent = formatPreferredDate(dateValue);
+      dateSelect.appendChild(option);
+    });
+    if (dateSelect.options.length === 1) {
+      const unavailable = document.createElement("option");
+      unavailable.disabled = true;
+      unavailable.textContent = "No dates listed — contact the technician";
+      dateSelect.appendChild(unavailable);
+    }
+  }
 
   function showView() {
     const requested = (window.location.hash || "#home").slice(1);
@@ -68,7 +108,7 @@
       header.className = "provider-card-header";
       const avatar = addText(header, "span", "avatar " + person.color, person.initials);
       avatar.setAttribute("aria-hidden", "true");
-      const arrival = addText(header, "span", "arrival-pill", person.arrivalLabel);
+      addText(header, "span", "arrival-pill", person.arrivalLabel);
       card.appendChild(header);
       addText(card, "h2", "", person.name);
       addText(card, "p", "provider-specialty", person.specialty);
@@ -101,13 +141,8 @@
     const button = addText(card, "a", "button", "Book service / request a quote →");
     button.href = "#booking";
     button.addEventListener("click", function () {
-      document.getElementById("booking-technician").textContent = "Send a request to " + person.name + ". They can reply with a quote for your approval.";
-      const dateInput = document.getElementById("preferred-date");
-      if (dateInput) {
-        const today = new Date();
-        const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split("T")[0];
-        dateInput.min = localToday;
-      }
+      document.getElementById("booking-technician").textContent = "Send a request to " + person.name + ". Choose one of their illustrative available days in the next 30 days; they will confirm the appointment directly.";
+      populateAvailableDates(person);
     });
     content.appendChild(card);
   }
@@ -123,6 +158,11 @@
     if (!form.reportValidity() || !selectedTechnician) return;
     const values = new FormData(form);
     const person = findTechnician(selectedTechnician);
+    const preferredDate = String(values.get("preferredDate"));
+    if (!person || getAvailableDates(person).indexOf(preferredDate) === -1) {
+      document.getElementById("booking-status").textContent = "Please choose one of the technician's listed available dates.";
+      return;
+    }
     jobs.unshift({
       id: "job-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
       technicianId: person.id,
@@ -130,7 +170,7 @@
       customer: String(values.get("customer")).trim(),
       area: String(values.get("area")).trim(),
       appliance: String(values.get("appliance")),
-      preferredDate: String(values.get("preferredDate")),
+      preferredDate: preferredDate,
       preferredTime: String(values.get("preferredTime")),
       timing: String(values.get("timing")),
       description: String(values.get("description")).trim(),
@@ -145,13 +185,6 @@
     renderAll();
     window.location.hash = "services";
   });
-
-  function formatPreferredDate(dateValue) {
-    if (!dateValue) return "Date not selected";
-    const date = new Date(dateValue + "T00:00:00");
-    if (Number.isNaN(date.getTime())) return dateValue;
-    return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-  }
 
   function statusLabel(status) {
     return { "awaiting-quote": "Waiting for quote", "quote-sent": "Quote received", accepted: "Quote accepted", declined: "Quote declined", completed: "Repair complete" }[status] || status;

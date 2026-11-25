@@ -1,16 +1,100 @@
-<section id="booking" data-view hidden>
-  <a class="back-link" href="#services">← Back to technicians</a>
-  <div class="page-heading"><p class="eyebrow">Request a quote</p><h1>Tell the technician what's wrong.</h1><p class="lead" id="booking-technician"></p></div>
-  <form class="form-card" id="booking-form">
-    <label>Your name<input name="customer" required maxlength="60" autocomplete="given-name" placeholder="First name"></label>
-    <label>Area (city or neighbourhood)<input name="area" required maxlength="80" placeholder="e.g. Antigonish"></label>
-    <label>Appliance<select name="appliance" required><option value="">Choose appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Dishwasher</option><option>Oven / stove</option><option>Other</option></select></label>
-    <label>Preferred date<input name="preferredDate" id="preferred-date" type="date" required></label>
-    <label>Preferred time<select name="preferredTime" required><option value="">Choose a time</option><option>Morning (8 AM–12 PM)</option><option>Afternoon (12 PM–4 PM)</option><option>Evening (4 PM–8 PM)</option><option>Any available time</option></select></label>
-    <label>When do you need help?<select name="timing" required><option>As soon as possible</option><option>Within a few days</option><option>Flexible</option></select></label>
-    <label class="wide-field">Briefly describe the problem<textarea name="description" required maxlength="600" rows="4" placeholder="What is the appliance doing (or not doing)?"></textarea></label>
-    <button class="button" type="submit">Send quote request <span aria-hidden="true">→</span></button>
-    <p class="form-note">The technician will respond with a quote in this demo. You can decide whether to accept it.</p>
-    <p id="booking-status" class="form-status" role="status" aria-live="polite"></p>
-  </form>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find local appliance repair technicians, request a quote, and arrange a repair with FixerUpper.">
+  <meta name="theme-color" content="#fff8f6">
+  <title>FixerUpper | Appliance repair made easier</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="payments.css">
+  <link rel="stylesheet" href="reviews.css">
+</head>
+<body>
+  <div class="app-frame">
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="FixerUpper home"><span class="brand-mark" aria-hidden="true">F</span><span>FixerUpper</span></a>
+      <span class="header-note">Local appliance repair, made simpler</span>
+    </header>
+    <main>
+      <section id="home" data-view>
+        <div class="welcome"><p class="eyebrow">A better way to get things working</p><h1>What brings you to FixerUpper?</h1><p class="lead">Choose how you'd like to use the community. Customers can request a quote, and independent technicians can respond in this local demo.</p></div>
+        <div class="choice-grid">
+          <a class="choice-card customer-choice" href="#services"><span class="choice-icon" aria-hidden="true">⌕</span><span class="choice-title">Request services</span><span class="choice-copy">Find a local appliance repair technician.</span><span class="choice-arrow" aria-hidden="true">→</span></a>
+          <a class="choice-card technician-choice" href="#provider"><span class="choice-icon" aria-hidden="true">⚒</span><span class="choice-title">Provide services</span><span class="choice-copy">Review repair requests and respond with a quote.</span><span class="choice-arrow" aria-hidden="true">→</span></a>
+          <a class="choice-card help-choice" href="#settings"><span class="choice-icon" aria-hidden="true">☰</span><span class="choice-title">Settings / customer help</span><span class="choice-copy">Learn how this prototype works.</span><span class="choice-arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="home-note"><span aria-hidden="true">✦</span><p><strong>Made for people, by people.</strong> Talk through the issue and agree on a quote directly with your technician.</p></div>
+      </section>
+
+      <section id="services" data-view hidden>
+        <div class="page-heading"><p class="eyebrow">Customer space</p><h1>Find a technician</h1><p class="lead">See providers in your area and prioritize the soonest availability.</p></div>
+        <div class="filter-panel">
+          <label class="filter-search">Search by name or area<input id="provider-search" type="search" placeholder="Try Antigonish…"></label>
+          <label>Appliance specialty<select id="specialty-filter"><option value="">All appliances</option><option value="refrigerator">Refrigerator</option><option value="washer">Washer</option><option value="dryer">Dryer</option><option value="dishwasher">Dishwasher</option><option value="oven">Oven / stove</option></select></label>
+          <label>Availability<select id="availability-filter"><option value="">Any availability</option><option value="today">Today</option><option value="tomorrow">Within 24 hours</option><option value="week">Within a week</option></select></label>
+          <label>Sort by<select id="sort-filter"><option value="soonest">Soonest arrival</option><option value="rating">Highest rated</option></select></label>
+        </div>
+        <p class="results-label" id="provider-results-count" aria-live="polite"></p>
+        <div class="provider-grid" id="provider-grid"></div>
+        <p class="empty-state" id="provider-empty" hidden>No technicians match those filters. Try changing your search.</p>
+        <div class="my-jobs-section"><div class="section-title-row"><div><p class="eyebrow">Your activity</p><h2>My repair requests</h2></div><span class="count-pill" id="my-jobs-count">0 requests</span></div><div id="customer-jobs" class="job-list"></div></div>
+        <p class="prototype-note">Sample profiles are fictional. Provider availability and ratings are demonstration data.</p>
+      </section>
+
+      <section id="profile" data-view hidden>
+        <a class="back-link" href="#services">← Back to technicians</a>
+        <div id="profile-content"></div>
+      </section>
+
+      <section id="booking" data-view hidden>
+        <a class="back-link" href="#services">← Back to technicians</a>
+        <div class="page-heading"><p class="eyebrow">Request a quote</p><h1>Tell the technician what's wrong.</h1><p class="lead" id="booking-technician"></p></div>
+        <form class="form-card" id="booking-form">
+          <label>Your name<input name="customer" required maxlength="60" autocomplete="given-name" placeholder="First name"></label>
+          <label>Area (city or neighbourhood)<input name="area" required maxlength="80" placeholder="e.g. Antigonish"></label>
+          <label>Appliance<select name="appliance" required><option value="">Choose appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Dishwasher</option><option>Oven / stove</option><option>Other</option></select></label>
+          <label>Preferred date<select name="preferredDate" id="preferred-date" required><option value="">Choose an available date</option></select><span class="field-hint">Hypothetical availability shown for the next 30 days; the technician must confirm.</span></label>
+          <label>Preferred time<select name="preferredTime" required><option value="">Choose a time</option><option>Morning (8 AM–12 PM)</option><option>Afternoon (12 PM–4 PM)</option><option>Evening (4 PM–8 PM)</option><option>Any available time</option></select></label>
+          <label>When do you need help?<select name="timing" required><option>As soon as possible</option><option>Within a few days</option><option>Flexible</option></select></label>
+          <label class="wide-field">Briefly describe the problem<textarea name="description" required maxlength="600" rows="4" placeholder="What is the appliance doing (or not doing)?"></textarea></label>
+          <button class="button" type="submit">Send quote request <span aria-hidden="true">→</span></button>
+          <p class="form-note">The technician will respond with a quote in this demo. You can decide whether to accept it.</p>
+          <p id="booking-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="provider" data-view hidden>
+        <div class="page-heading"><p class="eyebrow">Technician space</p><h1>Repair requests near you</h1><p class="lead">Review customer requests and send a message with your estimate. Customers' preferred dates and times are requests, not confirmed bookings.</p></div>
+        <label class="filter-search provider-area-filter">Filter by area<input id="job-area-filter" type="search" placeholder="Enter a city or neighbourhood"></label>
+        <div id="provider-jobs" class="job-list"></div>
+        <p id="provider-jobs-empty" class="empty-state" hidden>No requests yet. Customer requests will appear here in this browser.</p>
+        <p class="prototype-note">Provider and customer actions are a local demo. They are not shared with other devices or real users.</p>
+      </section>
+
+      <section id="settings" data-view hidden>
+        <div class="page-heading"><p class="eyebrow">Help & information</p><h1>Settings and customer help</h1><p class="lead">A few important details about using this FixerUpper prototype.</p></div>
+        <div class="settings-list">
+          <details open><summary>How do I request a repair?</summary><p>Choose “Request services,” filter technicians by specialty and availability, open a profile, and send a quote request describing the issue. Choose one of that technician's illustrative available days in the next 30 days and a preferred time.</p></details>
+          <details><summary>How do quotes and booking work?</summary><p>The technician replies with a price estimate and message. Review it in “My repair requests.” You can accept or decline. Date and time preferences are requests only; confirm the appointment directly with the technician.</p></details>
+          <details><summary>Does FixerUpper visit my home?</summary><p>No. FixerUpper is a connection platform concept only. The customer and independent service provider communicate and make arrangements directly.</p></details>
+          <details><summary>Are profiles and reviews real?</summary><p>No. All sample profiles, ratings, availability, requests, messages, and reviews are fictional demonstration content.</p></details>
+          <details><summary>Where is my demo data stored?</summary><p>Requests, quote replies, decisions, ratings, and reviews are stored in local browser storage on this device. This is not a real service and does not sync across devices.</p></details>
+          <details><summary>How do payment options work?</summary><p>Payment choices shown after accepting a quote are a visual prototype only. This site does not connect to banks, send Interac e-transfers, or process payments.</p></details>
+        </div>
+        <button class="button secondary" id="clear-demo-data" type="button">Clear demo requests and ratings</button><p class="form-status" id="settings-status" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+    <nav class="bottom-nav" aria-label="Main options">
+      <a href="#services" data-tab="services"><span aria-hidden="true">⌕</span><span>Request services</span></a>
+      <a href="#provider" data-tab="provider"><span aria-hidden="true">⚒</span><span>Provide services</span></a>
+      <a href="#settings" data-tab="settings"><span aria-hidden="true">☰</span><span>Settings / help</span></a>
+    </nav>
+    <footer class="site-footer"><strong>FixerUpper</strong><span>Student prototype for BSAD 281 at St. Francis Xavier University. Not a real company — all data is fictional.</span></footer>
+  </div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="payments.js"></script>
+  <script src="reviews.js"></script>
+</body>
+</html>
