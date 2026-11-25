@@ -8,7 +8,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const express = require("express");
 const session = require("express-session");
-const SQLiteStore = require("connect-sqlite3")(session);
 const bcrypt = require("bcryptjs");
 const Database = require("better-sqlite3");
 const helmet = require("helmet");
@@ -51,6 +50,71 @@ const findUserByEmail = db.prepare("SELECT id, email, password_hash, role FROM u
 const findPublicUser = db.prepare("SELECT id, email, role FROM users WHERE id = ?");
 const createUser = db.prepare("INSERT INTO users (id, email, password_hash, role, created_at) VALUES (?, ?, ?, ?, ?)");
 
+const sessionDb = new Database(path.join(DATA_DIR, "sessions.sqlite"));
+sessionDb.pragma("journal_mode = WAL");
+sessionDb.exec(`
+  CREATE TABLE IF NOT EXISTS sessions (
+    sid TEXT PRIMARY KEY,
+    expired INTEGER NOT NULL,
+    sess TEXT NOT NULL
+  )
+`);
+const getSession = sessionDb.prepare("SELECT sess FROM sessions WHERE sid = ? AND expired > ?");
+const setSession = sessionDb.prepare("INSERT OR REPLACE INTO sessions (sid, expired, sess) VALUES (?, ?, ?)");
+const deleteSession = sessionDb.prepare("DELETE FROM sessions WHERE sid = ?");
+const touchSession = sessionDb.prepare("UPDATE sessions SET expired = ? WHERE sid = ?");
+const deleteExpiredSessions = sessionDb.prepare("DELETE FROM sessions WHERE expired <= ?");
+deleteExpiredSessions.run(Date.now());
+const sessionCleanup = setInterval(function () { deleteExpiredSessions.run(Date.now()); }, 24 * 60 * 60 * 1000);
+sessionCleanup.unref();
+
+class SQLiteSessionStore extends session.Store {
+  get(sid, callback) {
+    try {
+      const row = getSession.get(sid, Date.now());
+      callback(null, row ? JSON.parse(row.sess) : null);
+    } catch (error) {
+      callback(error);
+    }
+  }
+
+  set(sid, sess, callback) {
+    try {
+      const expiresAt = sess.cookie && sess.cookie.expires
+        ? new Date(sess.cookie.expires).getTime()
+        : Date.now() + 24 * 60 * 60 * 1000;
+      setSession.run(sid, expiresAt, JSON.stringify(sess));
+      if (callback) callback(null);
+    } catch (error) {
+      if (callback) callback(error);
+      else throw error;
+    }
+  }
+
+  destroy(sid, callback) {
+    try {
+      deleteSession.run(sid);
+      if (callback) callback(null);
+    } catch (error) {
+      if (callback) callback(error);
+      else throw error;
+    }
+  }
+
+  touch(sid, sess, callback) {
+    try {
+      const expiresAt = sess.cookie && sess.cookie.expires
+        ? new Date(sess.cookie.expires).getTime()
+        : Date.now() + 24 * 60 * 60 * 1000;
+      touchSession.run(expiresAt, sid);
+      if (callback) callback(null);
+    } catch (error) {
+      if (callback) callback(error);
+      else throw error;
+    }
+  }
+}
+
 if (process.env.TRUST_PROXY === "1") app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(helmet({
@@ -77,7 +141,7 @@ if (IS_PRODUCTION) {
 app.use(express.json({ limit: "10kb", type: "application/json" }));
 app.use(session({
   name: "fixerupper.sid",
-  store: new SQLiteStore({ db: "sessions.sqlite", dir: DATA_DIR, table: "sessions", concurrentDB: true }),
+  store: new SQLiteSessionStore(),
   secret: SESSION_SECRET || crypto.randomBytes(48).toString("hex"),
   resave: false,
   saveUninitialized: false,
