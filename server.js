@@ -19,7 +19,7 @@ const PORT = Number(process.env.PORT || 3000);
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const DATA_DIR = process.env.FIXERUPPER_DATA_DIR || path.join(__dirname, ".fixerupper-data");
-const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN || "";
+const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN || process.env.RENDER_EXTERNAL_URL || "";
 
 if (IS_PRODUCTION && (!SESSION_SECRET || SESSION_SECRET.length < 32)) {
   throw new Error("Set SESSION_SECRET to a random value at least 32 characters long in production.");
@@ -62,6 +62,8 @@ app.use(helmet({
     }
   }
 }));
+
+app.get("/healthz", function (req, res) { res.sendStatus(200); });
 
 if (IS_PRODUCTION) {
   const canonicalHost = publicUrl.host.toLowerCase();

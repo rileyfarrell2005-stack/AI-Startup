@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: fixerupper-auth
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm ci --include=dev
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FIXERUPPER_DATA_DIR
+        value: /var/data
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SESSION_SECRET
+        generateValue: true
+    disk:
+      name: fixerupper-data
+      mountPath: /var/data
+      sizeGB: 1

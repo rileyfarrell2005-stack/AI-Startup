@@ -60,13 +60,24 @@
           <label>How soon do you need help?<select name="timing" required><option value="">Choose timing</option><option>As soon as possible</option><option>Within a few days</option><option>Flexible</option></select></label>
           <label class="wide-field">Describe the problem<textarea name="description" required maxlength="600" rows="4" placeholder="What is the appliance doing (or not doing)?"></textarea></label>
           <button class="button" type="submit">Submit quote request <span aria-hidden="true">→</span></button>
-          <p class="form-note">Your request is saved in this browser's demo data and appears in Provide services.</p>
+          <p class="form-note">Submitting a quote request is free in this demo. If you receive a fixed-price quote, its $5 customer convenience fee and total are shown before you accept. Fees are simulated only after you confirm the repair is complete; no payment is taken.</p>
           <p id="booking-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
       </section>
 
       <section id="provider" data-view hidden>
-        <div class="page-heading"><p class="eyebrow">Technician space</p><h1>Repair requests</h1><p class="lead">Review local demo requests and reply with a quote. Requested appointment dates and times are not confirmed bookings.</p></div>
+        <div class="page-heading"><p class="eyebrow">Technician space</p><h1>Repair requests</h1><p class="lead">Review local demo requests and reply with a fixed-price quote. Requested appointment dates and times are not confirmed bookings.</p></div>
+        <section class="revenue-dashboard" aria-labelledby="revenue-heading">
+          <div class="section-title-row"><div><p class="eyebrow">Fictional example</p><h2 id="revenue-heading">FixerUpper revenue dashboard</h2></div><span class="count-pill">Demo data</span></div>
+          <p class="prototype-note">Illustrative totals only—not linked to your requests or any real payments. Each completed booking contributes a $5 customer convenience fee and a separate $5 technician platform fee.</p>
+          <div class="revenue-metrics">
+            <article class="revenue-metric"><span>Completed bookings</span><strong>24</strong></article>
+            <article class="revenue-metric"><span>Customer convenience fees</span><strong>$120</strong></article>
+            <article class="revenue-metric"><span>Technician platform fees</span><strong>$120</strong></article>
+            <article class="revenue-metric revenue-total"><span>FixerUpper total revenue</span><strong>$240</strong></article>
+          </div>
+        </section>
+        <p class="prototype-note technician-fee-note">On a completed service, the technician's estimated earnings are the quoted repair price minus the $5 platform fee. Declined requests and incomplete services are not charged.</p>
         <label class="filter-search provider-area-filter">Filter requests by area<input id="job-area-filter" type="search" placeholder="Enter a city or neighbourhood"></label>
         <div id="provider-jobs" class="job-list"></div>
         <p id="provider-jobs-empty" class="empty-state" hidden>No requests match this area filter.</p>
@@ -77,9 +88,10 @@
         <div class="page-heading"><p class="eyebrow">Help & information</p><h1>Settings and customer help</h1><p class="lead">A few important details about this FixerUpper prototype.</p></div>
         <div class="settings-list">
           <details open><summary>How do I request a repair?</summary><p>Filter technicians, open a profile, and submit a quote request. Choose an illustrative open date and preferred time; the technician must confirm directly.</p></details>
-          <details><summary>How do quotes and appointments work?</summary><p>The technician replies with a price estimate. You can accept or decline it in My repair requests. Confirm the appointment directly with the technician.</p></details>
+          <details><summary>How do quotes, fees and appointments work?</summary><p>Quote requests and browsing are free. Before accepting a fixed-price quote, customers see the repair price, the separate $5 convenience fee and the total. If the repair is marked complete, the demo simulates that customer fee and a separate $5 technician platform fee; the technician's estimated earnings are the repair price minus that fee. Declines and incomplete repairs incur no fees.</p></details>
           <details><summary>Are profiles and availability real?</summary><p>No. Sample profiles, ratings, reviews and available dates are fictional demo data.</p></details>
-          <details><summary>Where is demo data stored?</summary><p>Requests, quote replies and ratings are stored in local browser storage on this device. They do not sync across devices and are not sent to a real service.</p></details>
+          <details><summary>Are these real charges or payments?</summary><p>No. This is a fictional university prototype. Fees, totals and technician earnings are demonstrations only; the app does not process payments or collect financial information.</p></details>
+          <details><summary>Where is demo data stored?</summary><p>Requests, quote replies, ratings and simulated completion records are stored in local browser storage on this device. They do not sync across devices and are not sent to a real service.</p></details>
         </div>
         <button class="button secondary" id="clear-demo-data" type="button">Clear demo requests and ratings</button>
         <p class="form-status" id="settings-status" role="status" aria-live="polite"></p>

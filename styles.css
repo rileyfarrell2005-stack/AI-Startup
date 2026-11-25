@@ -88,6 +88,10 @@ input::placeholder, textarea::placeholder { color: #a49a96; }
 .quote-box p { margin-bottom: 7px; }
 .quote-box p:last-child { margin-bottom: 0; }
 .quote-price { color: var(--brand-dark); font-size: 1.25rem; font-weight: 850; }
+.fee-breakdown { margin: 12px 0; padding: 12px; border-radius: 10px; background: #fff; }
+.fee-breakdown p { margin-bottom: 5px; font-size: .9rem; }
+.fee-breakdown .fee-total { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); color: var(--brand-dark); font-weight: 850; }
+.fee-breakdown .fee-disclosure, .fee-disclosure { color: var(--muted); font-size: .8rem; font-weight: 500; }
 .decision-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 13px; }
 .accepted-note { color: #4f704b; font-size: .88rem; }
 .rating-control { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 12px; font-weight: 700; }
@@ -110,6 +114,16 @@ input::placeholder, textarea::placeholder { color: #a49a96; }
 .quote-form { margin-top: 17px; padding: 16px; border: 1px dashed #e2c5bd; border-radius: 12px; background: #fffaf8; }
 .quote-form h3 { margin-bottom: 12px; font-size: 1rem; }
 .quote-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 13px; }
+.revenue-dashboard { margin: 24px 0 15px; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: white; box-shadow: 0 6px 22px #6c3e3608; }
+.revenue-dashboard .section-title-row { margin-bottom: 8px; }
+.revenue-dashboard .section-title-row h2 { font-size: 1.35rem; }
+.revenue-dashboard .prototype-note { margin-bottom: 14px; }
+.revenue-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.revenue-metric { display: flex; min-height: 90px; flex-direction: column; justify-content: space-between; gap: 8px; padding: 13px; border: 1px solid var(--border); border-radius: 11px; background: #fffaf8; }
+.revenue-metric span { color: var(--muted); font-size: .78rem; font-weight: 700; }
+.revenue-metric strong { color: var(--brand-dark); font-size: 1.35rem; }
+.revenue-total { border-color: #e7b5ac; background: var(--brand-soft); }
+.technician-fee-note { margin: 0 0 20px; }
 .settings-list { display: grid; gap: 11px; max-width: 780px; margin-bottom: 19px; }
 .settings-list details { padding: 16px 18px; }
 .settings-list summary { color: var(--text); font-weight: 800; cursor: pointer; }
@@ -135,6 +149,7 @@ input::placeholder, textarea::placeholder { color: #a49a96; }
   .wide-field, .form-card > .button, .form-card > .form-note, .form-card > .form-status { grid-column: 1; }
   .quote-fields { grid-template-columns: 1fr; }
   .quote-fields .wide-field { grid-column: auto; }
+  .revenue-metrics { grid-template-columns: 1fr 1fr; }
   .site-footer { flex-direction: column; gap: 4px; }
 }
 @media (max-width: 400px) {
@@ -142,4 +157,5 @@ input::placeholder, textarea::placeholder { color: #a49a96; }
   .filter-search { grid-column: auto; }
   .bottom-nav a { font-size: .67rem; }
   .job-top { align-items: flex-start; flex-direction: column; }
+  .revenue-metrics { grid-template-columns: 1fr; }
 }

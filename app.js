@@ -3,6 +3,9 @@
   "use strict";
 
   const STORE_KEY = "fixerupperDemoJobs";
+  const CUSTOMER_FEE = 5;
+  const TECHNICIAN_FEE = 5;
+  const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: "CAD" });
   const $ = function (selector) { return document.querySelector(selector); };
   const getJobs = function () {
     try {
@@ -47,6 +50,54 @@
     if (!value) return "Date not selected";
     const date = new Date(value + "T00:00:00");
     return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString(undefined, options || { year: "numeric", month: "short", day: "numeric" });
+  }
+  function quotePrice(job) {
+    if (!job || !job.quote) return null;
+    const value = job.quote.amount;
+    if (typeof value === "number") return Number.isFinite(value) && value >= 0 ? value : null;
+    if (typeof value !== "string") return null;
+    const match = value.trim().match(/^\$?\s*(\d+(?:\.\d{1,2})?)$/);
+    return match ? Number(match[1]) : null;
+  }
+  function money(value) { return currency.format(Number(value) || 0); }
+  function renderCustomerFeeBreakdown(parent, price, completed) {
+    const breakdown = document.createElement("div");
+    breakdown.className = "fee-breakdown";
+    addText(breakdown, "p", "", "Repair price: " + money(price));
+    addText(breakdown, "p", "", "Customer convenience fee: " + money(CUSTOMER_FEE));
+    addText(breakdown, "p", "fee-total", "Customer total: " + money(price + CUSTOMER_FEE));
+    addText(breakdown, "p", "fee-disclosure", completed
+      ? "Demonstration only: this fee was simulated when the repair was marked complete. No payment was taken."
+      : "The $5 fee applies only if the repair is completed. No fee is charged for browsing, quote requests, declines, or incomplete work.");
+    parent.appendChild(breakdown);
+  }
+  function completeJob(job, status) {
+    const price = quotePrice(job);
+    if (job.status !== "accepted" || price === null || job.fees || job.completedAt) {
+      status.textContent = "This repair cannot be completed or charged again. Refresh the page and check its current status.";
+      return;
+    }
+    const previousStatus = job.status;
+    const completedAt = new Date().toISOString();
+    job.status = "completed";
+    job.completedAt = completedAt;
+    job.fees = {
+      repairPrice: price,
+      customerConvenience: CUSTOMER_FEE,
+      technicianPlatform: TECHNICIAN_FEE,
+      customerTotal: price + CUSTOMER_FEE,
+      technicianEarnings: price - TECHNICIAN_FEE,
+      fixerUpperRevenue: CUSTOMER_FEE + TECHNICIAN_FEE,
+      simulated: true
+    };
+    if (!saveJobs()) {
+      job.status = previousStatus;
+      delete job.completedAt;
+      delete job.fees;
+      status.textContent = "Could not save completion in this browser, so no fees were simulated. Check storage settings and try again.";
+      return;
+    }
+    renderAll();
   }
   function showView() {
     const requested = (window.location.hash || "#home").slice(1);
@@ -228,21 +279,34 @@
       addText(card, "p", "", job.description);
       if (job.quote) {
         const quote = document.createElement("div"); quote.className = "quote-box";
-        addText(quote, "p", "quote-price", job.quote.amount);
+        const price = quotePrice(job);
+        addText(quote, "p", "quote-price", price === null ? job.quote.amount : money(price));
         addText(quote, "p", "", job.quote.message);
         addText(quote, "p", "job-meta", "Quote from " + job.quote.technician);
         if (job.status === "quote-sent") {
-          const actions = document.createElement("div"); actions.className = "decision-actions";
-          const accept = addText(actions, "button", "button", "Accept quote"); accept.type = "button";
-          accept.addEventListener("click", function () { job.status = "accepted"; saveJobs(); renderAll(); });
-          const decline = addText(actions, "button", "button secondary", "Decline"); decline.type = "button";
-          decline.addEventListener("click", function () { job.status = "declined"; saveJobs(); renderAll(); });
-          quote.appendChild(actions);
+          if (price !== null) {
+            renderCustomerFeeBreakdown(quote, price, false);
+            const actions = document.createElement("div"); actions.className = "decision-actions";
+            const accept = addText(actions, "button", "button", "Accept quote · " + money(price + CUSTOMER_FEE) + " total"); accept.type = "button";
+            accept.addEventListener("click", function () { job.status = "accepted"; saveJobs(); renderAll(); });
+            const decline = addText(actions, "button", "button secondary", "Decline"); decline.type = "button";
+            decline.addEventListener("click", function () { job.status = "declined"; saveJobs(); renderAll(); });
+            quote.appendChild(actions);
+          } else {
+            addText(quote, "p", "fee-disclosure", "This older quote needs one fixed repair price before you can accept it. No fee is due for a quote request.");
+          }
         } else if (job.status === "accepted") {
-          addText(quote, "p", "accepted-note", "Quote accepted. Arrange and confirm the visit directly with the technician.");
-          const complete = addText(quote, "button", "button secondary", "Mark repair complete"); complete.type = "button";
-          complete.addEventListener("click", function () { job.status = "completed"; saveJobs(); renderAll(); });
+          if (price !== null) {
+            renderCustomerFeeBreakdown(quote, price, false);
+            addText(quote, "p", "accepted-note", "Quote accepted. Arrange and confirm the visit directly with the technician. Fees are simulated only after completion.");
+            const complete = addText(quote, "button", "button secondary", "Confirm repair complete"); complete.type = "button";
+            const completionStatus = addText(quote, "p", "form-status", "");
+            complete.addEventListener("click", function () { completeJob(job, completionStatus); });
+          } else {
+            addText(quote, "p", "fee-disclosure", "Ask the technician to replace this older estimate with one fixed price before marking the repair complete.");
+          }
         } else if (job.status === "completed") {
+          if (price !== null) renderCustomerFeeBreakdown(quote, price, true);
           if (job.rating) addText(quote, "p", "provider-rating", "Your rating: " + "★".repeat(job.rating) + "☆".repeat(5 - job.rating));
           else {
             const rating = document.createElement("div"); rating.className = "rating-control";
@@ -285,40 +349,60 @@
       addText(card, "p", "job-meta", "Preferred appointment: " + formatDate(job.preferredDate) + " · " + (job.preferredTime || "Any time") + " (pending confirmation)");
       addText(card, "p", "", job.description);
       if (!job.quote && job.status === "awaiting-quote") {
-        const form = document.createElement("form"); form.className = "quote-form";
-        addText(form, "h3", "", "Send a quote");
-        const fields = document.createElement("div"); fields.className = "quote-fields";
-        function addInput(labelText, name, value, placeholder) {
-          const label = document.createElement("label"); label.textContent = labelText;
-          const input = document.createElement("input"); input.name = name; input.required = true; input.maxLength = name === "message" ? 400 : 60; input.value = value || ""; input.placeholder = placeholder || "";
-          label.appendChild(input); fields.appendChild(label); return input;
-        }
-        addInput("Your technician name", "technician", job.technicianName);
-        addInput("Estimated price", "amount", "", "e.g. $80–$120");
-        const messageLabel = document.createElement("label"); messageLabel.className = "wide-field"; messageLabel.textContent = "Message / what's included";
-        const message = document.createElement("textarea"); message.name = "message"; message.required = true; message.maxLength = 400; message.rows = 2; message.placeholder = "Explain what's included or next steps";
-        messageLabel.appendChild(message); fields.appendChild(messageLabel);
-        const submit = addText(form, "button", "button", "Send quote"); submit.type = "submit";
-        form.append(fields, submit);
-        form.addEventListener("submit", function (event) {
-          event.preventDefault();
-          if (!form.reportValidity()) return;
-          const values = new FormData(form);
-          job.technicianName = String(values.get("technician")).trim();
-          job.quote = { technician: job.technicianName, amount: String(values.get("amount")).trim(), message: String(values.get("message")).trim() };
-          job.status = "quote-sent";
-          saveJobs(); renderAll();
-        });
-        card.appendChild(form);
+        renderQuoteForm(job, card, false);
       } else if (job.quote) {
         const quote = document.createElement("div"); quote.className = "quote-box";
-        addText(quote, "p", "quote-price", job.quote.amount);
+        const price = quotePrice(job);
+        addText(quote, "p", "quote-price", price === null ? job.quote.amount : money(price));
         addText(quote, "p", "", job.quote.message);
         addText(quote, "p", "job-meta", "Quote sent by " + job.quote.technician);
+        if (job.status === "completed" && job.fees) {
+          addText(quote, "p", "fee-breakdown", "Technician platform fee: " + money(job.fees.technicianPlatform) + " · Estimated earnings after fee: " + money(job.fees.technicianEarnings) + " (demonstration only)");
+        } else if (price === null && (job.status === "quote-sent" || job.status === "accepted")) {
+          addText(quote, "p", "fee-disclosure", "Enter one fixed price so the customer can review the $5 convenience fee before accepting.");
+          renderQuoteForm(job, card, true);
+        }
         card.appendChild(quote);
       }
       list.appendChild(card);
     });
+  }
+  function renderQuoteForm(job, parent, replacing) {
+    const form = document.createElement("form"); form.className = "quote-form";
+    addText(form, "h3", "", replacing ? "Replace with a fixed-price quote" : "Send a quote");
+    const fields = document.createElement("div"); fields.className = "quote-fields";
+    function addInput(labelText, name, value, placeholder) {
+      const label = document.createElement("label"); label.textContent = labelText;
+      const input = document.createElement("input"); input.name = name; input.required = true;
+      if (name === "technician") input.maxLength = 60;
+      input.value = value || ""; input.placeholder = placeholder || "";
+      label.appendChild(input); fields.appendChild(label); return input;
+    }
+    addInput("Your technician name", "technician", job.quote && job.quote.technician || job.technicianName);
+    const amountLabel = document.createElement("label");
+    amountLabel.textContent = "Fixed repair price (CAD)";
+    const amount = document.createElement("input");
+    amount.name = "amount"; amount.type = "number"; amount.required = true; amount.min = "0"; amount.step = "0.01";
+    if (job.quote && quotePrice(job) !== null) amount.value = quotePrice(job);
+    amount.placeholder = "e.g. 80.00";
+    amountLabel.appendChild(amount); fields.appendChild(amountLabel);
+    const messageLabel = document.createElement("label"); messageLabel.className = "wide-field"; messageLabel.textContent = "Message / what's included";
+    const message = document.createElement("textarea"); message.name = "message"; message.required = true; message.maxLength = 400; message.rows = 2; message.placeholder = "Explain what's included or next steps";
+    if (job.quote) message.value = job.quote.message;
+    messageLabel.appendChild(message); fields.appendChild(messageLabel);
+    const submit = addText(form, "button", "button", replacing ? "Update fixed-price quote" : "Send quote"); submit.type = "submit";
+    addText(form, "p", "fee-disclosure", "A $5 technician platform fee applies only after a booking is completed. Estimated earnings are the repair price minus $5.");
+    form.append(fields, submit);
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const values = new FormData(form);
+      job.technicianName = String(values.get("technician")).trim();
+      job.quote = { technician: job.technicianName, amount: Number(values.get("amount")), message: String(values.get("message")).trim() };
+      job.status = "quote-sent";
+      saveJobs(); renderAll();
+    });
+    parent.appendChild(form);
   }
   function renderAll() { renderTechnicians(); renderCustomerJobs(); renderProviderJobs(); }
 
