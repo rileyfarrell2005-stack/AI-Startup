@@ -25,7 +25,17 @@ Copy this block for each session.
 yes
 ### Session — [date] — driver: [first name]
 
-- **Goal for this session:**
+ **Goal for this session:** build customer and technician data
+- **Key prompts we gave Copilot** (paste the important ones): 
+  1. allow customers to Search by appliance type (fridge, washer, dryer, dishwasher, etc.).
+  2. allow customers to create an account
+- **What worked:** building slowly and being clear with my language
+- **What broke, and how we fixed it:** the 3rd party verification/authentication browser crashed, we coded variables into it to make the authenticator functional.
+- **Committed?** yes / no — commit message: yes
+---
+---
+
+ **Goal for this session:**
 - **Key prompts we gave Copilot** (paste the important ones):
   1.
   2.
