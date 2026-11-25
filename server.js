@@ -195,7 +195,7 @@ app.post("/api/auth/login", authLimiter, csrfProtection, async function (req, re
       return res.status(401).json({ error: "Email or password is incorrect." });
     }
     const user = findUserByEmail.get(email);
-    const dummyHash = "$2a$12$C6UzMDM.H6dfI/f/IKcEe.5JQv6cFQO2yP4uM/2Q8VJq6F9z2h7Je";
+    const dummyHash = "$2a$12$C6UzMDM.H6dfI/f/IKcEe.5JQv6F9z2h7Je";
     const matches = await bcrypt.compare(password, user ? user.password_hash : dummyHash);
     if (!user || !matches) return res.status(401).json({ error: "Email or password is incorrect." });
     await regenerateSession(req);
@@ -234,7 +234,7 @@ app.get("/", function (req, res, next) {
   fs.readFile(path.join(__dirname, "index.html"), "utf8", function (error, html) {
     if (error) return next(error);
     const injectedHead = '<link rel="stylesheet" href="/auth.css">';
-    const injectedBody = '<script src="/auth-client.js" defer></script>';
+    const injectedBody = '<script src="/auth-client.js" defer></script><script src="/compare.js" defer></script>';
     html = html.replace(/<body([^>]*)>/i, '<body class="auth-locked"$1>');
     html = html.replace(/<\/head>/i, injectedHead + "</head>");
     html = html.replace(/<\/body>/i, injectedBody + "</body>");
