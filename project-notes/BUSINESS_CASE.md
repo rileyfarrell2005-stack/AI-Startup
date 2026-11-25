@@ -94,4 +94,4 @@ The app may also have technical problems, or show technicians as available when 
 
 “The business should make money by offering a useful service, not by allowing misleading advertisements or putting customers at risk.
 
-**this project was created with the use of Artificial Intelligence, All rights are reserved**
+**AI use: I used Copilot to edit my code and provide working replications of my personal ideas. I also used ChatGPT to cross reference different ideas in order to view both sides of the options presented to me through my choice, every idea used in this case is thought of and put into action by its creator**
