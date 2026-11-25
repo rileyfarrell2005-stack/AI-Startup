@@ -100,7 +100,15 @@
     addText(card, "p", "", person.bio);
     const button = addText(card, "a", "button", "Book service / request a quote →");
     button.href = "#booking";
-    button.addEventListener("click", function () { document.getElementById("booking-technician").textContent = "Send a request to " + person.name + ". They can reply with a quote for your approval."; });
+    button.addEventListener("click", function () {
+      document.getElementById("booking-technician").textContent = "Send a request to " + person.name + ". They can reply with a quote for your approval.";
+      const dateInput = document.getElementById("preferred-date");
+      if (dateInput) {
+        const today = new Date();
+        const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().split("T")[0];
+        dateInput.min = localToday;
+      }
+    });
     content.appendChild(card);
   }
 
@@ -122,6 +130,8 @@
       customer: String(values.get("customer")).trim(),
       area: String(values.get("area")).trim(),
       appliance: String(values.get("appliance")),
+      preferredDate: String(values.get("preferredDate")),
+      preferredTime: String(values.get("preferredTime")),
       timing: String(values.get("timing")),
       description: String(values.get("description")).trim(),
       status: "awaiting-quote",
@@ -135,6 +145,13 @@
     renderAll();
     window.location.hash = "services";
   });
+
+  function formatPreferredDate(dateValue) {
+    if (!dateValue) return "Date not selected";
+    const date = new Date(dateValue + "T00:00:00");
+    if (Number.isNaN(date.getTime())) return dateValue;
+    return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
 
   function statusLabel(status) {
     return { "awaiting-quote": "Waiting for quote", "quote-sent": "Quote received", accepted: "Quote accepted", declined: "Quote declined", completed: "Repair complete" }[status] || status;
@@ -155,6 +172,7 @@
       card.appendChild(top);
       addText(card, "h3", "", "Request for " + job.technicianName);
       addText(card, "p", "job-meta", job.area + " · " + job.timing);
+      addText(card, "p", "preferred-schedule", "Preferred: " + formatPreferredDate(job.preferredDate) + " · " + (job.preferredTime || "Time not selected"));
       addText(card, "p", "", job.description);
       if (job.quote) {
         const quote = document.createElement("div"); quote.className = "quote-box";
@@ -215,6 +233,7 @@
       card.appendChild(top);
       addText(card, "h2", "", job.appliance + " repair request");
       addText(card, "p", "job-meta", job.area + " · " + job.timing + " · Customer: " + job.customer);
+      addText(card, "p", "preferred-schedule", "Preferred: " + formatPreferredDate(job.preferredDate) + " · " + (job.preferredTime || "Time not selected"));
       addText(card, "p", "", job.description);
       if (!job.quote && job.status === "awaiting-quote") {
         const form = document.createElement("form"); form.className = "quote-form";
@@ -225,7 +244,7 @@
         const amountLabel = document.createElement("label"); amountLabel.textContent = "Estimated price";
         const amountInput = document.createElement("input"); amountInput.name = "amount"; amountInput.required = true; amountInput.maxLength = 40; amountInput.placeholder = "e.g. $80–$120"; amountLabel.appendChild(amountInput);
         const messageLabel = document.createElement("label"); messageLabel.className = "wide-field"; messageLabel.textContent = "Message / what's included";
-        const messageInput = document.createElement("textarea"); messageInput.name = "message"; messageInput.required = true; messageInput.maxLength = 400; messageInput.rows = 2; messageInput.placeholder = "Explain what's included or ask a question…"; messageLabel.appendChild(messageInput);
+        const messageInput = document.createElement("textarea"); messageInput.name = "message"; messageInput.required = true; messageInput.maxLength = 400; messageInput.rows = 2; messageInput.placeholder = "Explain the visit, parts, or next steps"; messageLabel.appendChild(messageInput);
         fields.append(nameLabel, amountLabel, messageLabel);
         const submit = addText(form, "button", "button", "Send quote"); submit.type = "submit";
         form.append(fields, submit);
