@@ -54,12 +54,10 @@
           <label>Your name<input name="customer" required maxlength="60" autocomplete="given-name" placeholder="First name"></label>
           <label>Area (city or neighbourhood)<input name="area" required maxlength="80" placeholder="e.g. Antigonish"></label>
           <label>Appliance<select name="appliance" required><option value="">Choose appliance</option><option>Refrigerator</option><option>Washer</option><option>Dryer</option><option>Dishwasher</option><option>Oven / stove</option><option>Other</option></select></label>
-          <label>Preferred date<select name="preferredDate" id="preferred-date" required><option value="">Choose an available date</option></select><span class="field-hint">Hypothetical availability shown for the next 30 days; the technician must confirm.</span></label>
-          <label>Preferred time<select name="preferredTime" required><option value="">Choose a time</option><option>Morning (8 AM–12 PM)</option><option>Afternoon (12 PM–4 PM)</option><option>Evening (4 PM–8 PM)</option><option>Any available time</option></select></label>
           <label>When do you need help?<select name="timing" required><option>As soon as possible</option><option>Within a few days</option><option>Flexible</option></select></label>
           <label class="wide-field">Briefly describe the problem<textarea name="description" required maxlength="600" rows="4" placeholder="What is the appliance doing (or not doing)?"></textarea></label>
           <button class="button" type="submit">Send quote request <span aria-hidden="true">→</span></button>
-          <p class="form-note">The technician will respond with a quote in this demo. You can decide whether to accept it.</p>
+          <p class="form-note">Your request is saved in this browser's demo data. The technician can review it under Provide services and respond with a quote.</p>
           <p id="booking-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
       </section>
@@ -75,8 +73,8 @@
       <section id="settings" data-view hidden>
         <div class="page-heading"><p class="eyebrow">Help & information</p><h1>Settings and customer help</h1><p class="lead">A few important details about using this FixerUpper prototype.</p></div>
         <div class="settings-list">
-          <details open><summary>How do I request a repair?</summary><p>Choose “Request services,” filter technicians by specialty and availability, open a profile, and send a quote request describing the issue. Choose one of that technician's illustrative available days in the next 30 days and a preferred time.</p></details>
-          <details><summary>How do quotes and booking work?</summary><p>The technician replies with a price estimate and message. Review it in “My repair requests.” You can accept or decline. Date and time preferences are requests only; confirm the appointment directly with the technician.</p></details>
+          <details open><summary>How do I request a repair?</summary><p>Choose “Request services,” filter technicians by specialty and availability, open a profile, and submit a quote request describing the issue. Choose one of the technician's illustrative available days in the next 30 days and a preferred time.</p></details>
+          <details><summary>How do quotes and booking work?</summary><p>The technician replies with a price estimate and message. Review it in “My repair requests.” You can accept or decline. Date and time preferences are not confirmed bookings; confirm the appointment directly with the technician.</p></details>
           <details><summary>Does FixerUpper visit my home?</summary><p>No. FixerUpper is a connection platform concept only. The customer and independent service provider communicate and make arrangements directly.</p></details>
           <details><summary>Are profiles and reviews real?</summary><p>No. All sample profiles, ratings, availability, requests, messages, and reviews are fictional demonstration content.</p></details>
           <details><summary>Where is my demo data stored?</summary><p>Requests, quote replies, decisions, ratings, and reviews are stored in local browser storage on this device. This is not a real service and does not sync across devices.</p></details>
@@ -94,6 +92,7 @@
   </div>
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="booking-availability.js"></script>
   <script src="payments.js"></script>
   <script src="reviews.js"></script>
 </body>

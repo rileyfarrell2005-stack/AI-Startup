@@ -5,7 +5,7 @@ const TECHNICIANS = [
     id: "tech-1", name: "Jamie R.", specialty: "Refrigerators & freezers", appliances: ["refrigerator"],
     experience: "8 years' experience", area: "Antigonish", rating: "4.9", baseRating: "4.9", reviewCount: 18, baseReviewCount: 18,
     initials: "JR", color: "peach", arrivalHours: 3, arrivalLabel: "Today · about 3 hours",
-    // Illustrative open days as offsets from today, within the next 30 days.
+    // Illustrative available days counted from today (0–30 days).
     availableDateOffsets: [1, 3, 6, 10, 14, 18, 22, 27, 30],
     bio: "Independent appliance repair technician focused on refrigerator and freezer troubleshooting. Jamie confirms scope, availability, and final pricing directly with each customer."
   },
