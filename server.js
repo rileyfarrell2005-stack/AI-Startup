@@ -115,7 +115,7 @@ class SQLiteSessionStore extends session.Store {
   }
 }
 
-if (process.env.TRUST_PROXY === "1") app.set("trust proxy", 1);
+if (process.env.TRUST_PROXY === "1" || process.env.RENDER_EXTERNAL_URL) app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(helmet({
   contentSecurityPolicy: {
