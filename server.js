@@ -1,6 +1,6 @@
 // FixerUpper authentication server.
-// Passwords are bcrypt-hashed; sessions are server-side and stored in SQLite.
-// Production must use HTTPS and a trusted, configured public origin.
+// Passwords are bcrypt-hashed; authenticated sessions are server-side in SQLite.
+// Demo 2-factor verification is simulated and must not be treated as real MFA.
 "use strict";
 
 const crypto = require("node:crypto");
@@ -24,9 +24,7 @@ const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN || "";
 if (IS_PRODUCTION && (!SESSION_SECRET || SESSION_SECRET.length < 32)) {
   throw new Error("Set SESSION_SECRET to a random value at least 32 characters long in production.");
 }
-if (!SESSION_SECRET && !IS_PRODUCTION) {
-  console.warn("Using a development-only session secret. Set SESSION_SECRET before deployment.");
-}
+if (!SESSION_SECRET && !IS_PRODUCTION) console.warn("Using a development-only session secret. Set SESSION_SECRET before deployment.");
 let publicUrl = null;
 if (IS_PRODUCTION) {
   try { publicUrl = new URL(PUBLIC_ORIGIN); }
@@ -53,35 +51,23 @@ const findUserByEmail = db.prepare("SELECT id, email, password_hash, role FROM u
 const findPublicUser = db.prepare("SELECT id, email, role FROM users WHERE id = ?");
 const createUser = db.prepare("INSERT INTO users (id, email, password_hash, role, created_at) VALUES (?, ?, ?, ?, ?)");
 
-// Only enable this when the hosting provider's trusted reverse proxy overwrites
-// X-Forwarded-Proto. Never trust arbitrary client-provided forwarding headers.
 if (process.env.TRUST_PROXY === "1") app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      baseUri: ["'self'"],
-      frameAncestors: ["'none'"]
+      defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"], connectSrc: ["'self'"], objectSrc: ["'none'"],
+      baseUri: ["'self'"], frameAncestors: ["'none'"]
     }
   }
 }));
 
-// In production, always redirect HTTP and alternate hostnames to the exact
-// configured HTTPS origin. The redirect destination is never built from the
-// untrusted Host header, which avoids open-redirect attacks.
 if (IS_PRODUCTION) {
   const canonicalHost = publicUrl.host.toLowerCase();
   app.use(function (req, res, next) {
     const requestHost = (req.get("host") || "").toLowerCase();
-    if (!req.secure || requestHost !== canonicalHost) {
-      return res.redirect(308, PUBLIC_ORIGIN.replace(/\/$/, "") + req.originalUrl);
-    }
+    if (!req.secure || requestHost !== canonicalHost) return res.redirect(308, PUBLIC_ORIGIN.replace(/\/$/, "") + req.originalUrl);
     next();
   });
 }
@@ -93,14 +79,8 @@ app.use(session({
   secret: SESSION_SECRET || crypto.randomBytes(48).toString("hex"),
   resave: false,
   saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: IS_PRODUCTION,
-    sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24 * 7
-  }
+  cookie: { httpOnly: true, secure: IS_PRODUCTION, sameSite: "lax", maxAge: 1000 * 60 * 60 * 24 * 7 }
 }));
-
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
@@ -133,26 +113,20 @@ function requireRole(role) {
   };
 }
 function regenerateSession(req) {
-  return new Promise(function (resolve, reject) {
-    req.session.regenerate(function (error) { if (error) reject(error); else resolve(); });
-  });
+  return new Promise(function (resolve, reject) { req.session.regenerate(function (error) { if (error) reject(error); else resolve(); }); });
 }
 function saveSession(req) {
-  return new Promise(function (resolve, reject) {
-    req.session.save(function (error) { if (error) reject(error); else resolve(); });
-  });
+  return new Promise(function (resolve, reject) { req.session.save(function (error) { if (error) reject(error); else resolve(); }); });
 }
-function normalizeEmail(value) {
-  return typeof value === "string" ? value.trim().toLowerCase() : "";
-}
-function validEmail(value) {
-  return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-function validPassword(value) {
-  return typeof value === "string" && value.length >= 12 && Buffer.byteLength(value, "utf8") <= 72;
-}
-function publicAccount(user) {
-  return { id: user.id, email: user.email, role: user.role };
+function normalizeEmail(value) { return typeof value === "string" ? value.trim().toLowerCase() : ""; }
+function validEmail(value) { return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+function validPassword(value) { return typeof value === "string" && value.length >= 12 && Buffer.byteLength(value, "utf8") <= 72; }
+function publicAccount(user) { return { id: user.id, email: user.email, role: user.role }; }
+function clearPendingVerification(req) {
+  delete req.session.pendingVerificationUserId;
+  delete req.session.pendingVerificationCode;
+  delete req.session.pendingVerificationExpiresAt;
+  delete req.session.pendingVerificationAttempts;
 }
 
 app.get("/api/auth/csrf", function (req, res, next) {
@@ -173,9 +147,8 @@ app.post("/api/auth/register", authLimiter, csrfProtection, async function (req,
     if (role !== "customer" && role !== "technician") return res.status(400).json({ error: "Choose customer or technician." });
     const user = { id: crypto.randomUUID(), email: email, role: role };
     const hash = await bcrypt.hash(password, 12);
-    try {
-      createUser.run(user.id, user.email, hash, user.role, new Date().toISOString());
-    } catch (error) {
+    try { createUser.run(user.id, user.email, hash, user.role, new Date().toISOString()); }
+    catch (error) {
       if (error.code === "SQLITE_CONSTRAINT_UNIQUE") return res.status(409).json({ error: "Unable to create account with those details." });
       throw error;
     }
@@ -198,6 +171,57 @@ app.post("/api/auth/login", authLimiter, csrfProtection, async function (req, re
     const dummyHash = "$2a$12$C6UzMDM.H6dfI/f/IKcEe.5JQv6F9z2h7Je";
     const matches = await bcrypt.compare(password, user ? user.password_hash : dummyHash);
     if (!user || !matches) return res.status(401).json({ error: "Email or password is incorrect." });
+
+    // Demo only: the code is returned to the browser for display, not delivered
+    // through an independent channel, so this is not genuine two-factor auth.
+    await regenerateSession(req);
+    const demoCode = String(crypto.randomInt(0, 1000000)).padStart(6, "0");
+    req.session.pendingVerificationUserId = user.id;
+    req.session.pendingVerificationCode = demoCode;
+    req.session.pendingVerificationExpiresAt = Date.now() + 5 * 60 * 1000;
+    req.session.pendingVerificationAttempts = 0;
+    req.session.csrfToken = crypto.randomBytes(32).toString("hex");
+    await saveSession(req);
+    res.set("Cache-Control", "no-store").json({
+      requiresDemoVerification: true,
+      demoVerificationCode: demoCode,
+      csrfToken: req.session.csrfToken
+    });
+  } catch (error) { next(error); }
+});
+
+app.post("/api/auth/verify-demo-2fa", authLimiter, csrfProtection, async function (req, res, next) {
+  try {
+    const session = req.session;
+    const code = req.body && req.body.code;
+    const pendingUserId = session.pendingVerificationUserId;
+    if (!pendingUserId || !session.pendingVerificationCode || !session.pendingVerificationExpiresAt) {
+      return res.status(400).json({ error: "No verification is pending. Sign in again." });
+    }
+    if (Date.now() > session.pendingVerificationExpiresAt) {
+      clearPendingVerification(session);
+      await saveSession(req);
+      return res.status(400).json({ error: "Verification code expired. Sign in again." });
+    }
+    if (session.pendingVerificationAttempts >= 5) {
+      clearPendingVerification(session);
+      await saveSession(req);
+      return res.status(429).json({ error: "Too many code attempts. Sign in again." });
+    }
+    if (typeof code !== "string" || !/^\d{6}$/.test(code) || code !== session.pendingVerificationCode) {
+      session.pendingVerificationAttempts += 1;
+      const attemptsLeft = Math.max(0, 5 - session.pendingVerificationAttempts);
+      if (attemptsLeft === 0) clearPendingVerification(session);
+      await saveSession(req);
+      return res.status(401).json({ error: attemptsLeft ? "That demo code is incorrect. " + attemptsLeft + " attempts remain." : "Too many code attempts. Sign in again." });
+    }
+    const user = findPublicUser.get(pendingUserId);
+    if (!user) {
+      clearPendingVerification(session);
+      await saveSession(req);
+      return res.status(401).json({ error: "Account could not be verified. Sign in again." });
+    }
+    clearPendingVerification(session);
     await regenerateSession(req);
     req.session.userId = user.id;
     req.session.csrfToken = crypto.randomBytes(32).toString("hex");
@@ -209,7 +233,6 @@ app.post("/api/auth/login", authLimiter, csrfProtection, async function (req, re
 app.get("/api/auth/me", requireAuth, function (req, res) {
   res.set("Cache-Control", "no-store").json({ user: req.user });
 });
-
 app.post("/api/auth/logout", csrfProtection, function (req, res, next) {
   req.session.destroy(function (error) {
     if (error) return next(error);
@@ -217,13 +240,8 @@ app.post("/api/auth/logout", csrfProtection, function (req, res, next) {
     res.status(204).end();
   });
 });
-
-app.get("/api/customer/account", requireAuth, requireRole("customer"), function (req, res) {
-  res.json({ user: req.user });
-});
-app.get("/api/technician/account", requireAuth, requireRole("technician"), function (req, res) {
-  res.json({ user: req.user });
-});
+app.get("/api/customer/account", requireAuth, requireRole("customer"), function (req, res) { res.json({ user: req.user }); });
+app.get("/api/technician/account", requireAuth, requireRole("technician"), function (req, res) { res.json({ user: req.user }); });
 
 app.use(function (req, res, next) {
   if (/^\/(?:\.fixerupper-data|server\.js|package(?:-lock)?\.json|\.git)(?:\/|$)/i.test(req.path)) return res.sendStatus(404);
@@ -248,7 +266,4 @@ app.use(function (error, req, res, next) {
   if (req.path.startsWith("/api/")) return res.status(500).json({ error: "A server error occurred." });
   res.status(500).send("A server error occurred.");
 });
-
-app.listen(PORT, function () {
-  console.log("FixerUpper auth server listening on port " + PORT);
-});
+app.listen(PORT, function () { console.log("FixerUpper auth server listening on port " + PORT); });

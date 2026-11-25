@@ -19,6 +19,9 @@ body.auth-locked .app-frame > .site-footer { display: none !important; }
 .auth-form .button { margin: 3px 0 0; }
 .auth-error { min-height: 1.35em; margin: 0; color: #963b35 !important; font-size: .88rem; font-weight: 700; }
 .auth-note { margin: 0; color: #746b68; font-size: .79rem; }
+.demo-warning { margin: 0; padding: 10px 12px; border-radius: 9px; background: #fff0d9; color: #795b27; font-size: .83rem; font-weight: 700; }
+.demo-code-notice { margin: 12px 0; padding: 12px; border: 1px solid #e6cb9e; border-radius: 10px; background: #fff8e9; color: #634a1c !important; font-size: 1rem; font-weight: 800; letter-spacing: .03em; }
+.auth-back-button { min-height: 42px; border: 0; background: transparent; color: #963b35; font: inherit; text-decoration: underline; cursor: pointer; }
 .password-strength { display: grid; gap: 6px; }
 .strength-label { color: #746b68; font-size: .82rem; font-weight: 750; }
 .strength-meter { display: block; height: 8px; overflow: hidden; border-radius: 99px; background: #eee8e6; }
