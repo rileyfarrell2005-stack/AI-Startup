@@ -12,9 +12,9 @@ Keep this up to date as you go — a few lines per work session is enough. It's 
 
 Copy this block for each session.
 
-### Session — [date] — driver: [first name]
+### Session — [11/24) — driver: [Riley]
 
-- **Goal for this session:** Learn to code it and test Copilots Intelligence.
+- **Goal for this session:** Learn to code it and test Copilots abilities.
 - **Key prompts we gave Copilot**  
   1. can you add a code for my website, called fixerupper which is an online appliance repair service where both customers and technicians can interact
   2. so next we will work on how the app works, it will bring you to a homescreen that has 3 options at the bottom . "request services" , " provide services" and the third one being settings/customer help, once you chose the one that applies to you by clicking on the screen, you are redirected to a screen of listings for available resources and filters to filter out any service providers you may not be seeking at this particular monet, the app colour will be read which will be bordered around the app in a light but easy to read fashion, searches will provide the people in your area that have the quickest time to come repair your appliance, the filters in the app will help make this work, in order to book you click a book service button once you click on someones profile and fill out a brief statement of the problem and what appliance has the problem, they will then come back with a quote for the work and the customer will decide whether they would like the service or not, they are able to rate technicians and the app does not meet with customers, just the people who use it
@@ -23,7 +23,7 @@ Copy this block for each session.
 - **What broke, and how we fixed it:** no issues yet
 - **Committed?** yes / no — commit message: 
 yes
-### Session — [date] — driver: [first name]
+### Session — [11/25] — driver: [Riley]
 
  **Goal for this session:** build customer and technician data
 - **Key prompts we gave Copilot** (paste the important ones): 
@@ -34,14 +34,15 @@ yes
 - **Committed?** yes / no — commit message: yes
 ---
 ---
+### Session — [11/25] — driver: [Riley]
 
- **Goal for this session:**
+ **Goal for this session:** Deploy app and see what happens with my app.
 - **Key prompts we gave Copilot** (paste the important ones):
-  1.
-  2.
-- **What worked:**
-- **What broke, and how we fixed it:**
-- **Committed?** yes / no — commit message:
+  1. What code do I need to enter on render to successfully deploy my app?
+  2. can you connect to render and let me know how to fix these coding errors in order to deploy my app.
+- **What worked:** the app successfully launched
+- **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables on my end, but I corrected what it had asked me to do by asking copilot for help 
+- **Committed?** yes / no — commit message: yes
 ---
 
 ## Things that broke (running list)
