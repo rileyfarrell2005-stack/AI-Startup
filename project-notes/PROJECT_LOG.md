@@ -38,12 +38,15 @@ yes
 
  **Goal for this session:** deploy app and see what the happens.
 - **Key prompts we gave Copilot** (paste the important ones):
-  1. What code do I need to enter on render to successfully deploy my app?
+  1.can you remove the 2 factor authentication code due to it causing a server error
   2. can you connect to render and let me know how to fix these coding errors in order to deploy my app.
 - **What worked:** the app successfully launched
-- **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables that I hadn't noticed, but I corrected what it had asked me to do by asking copilot for help. it guided me to the environment variable in the render app and eventually deployed my app and connected it to the internet
+- **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables that I hadn't noticed, but I corrected what it had asked me to do by asking copilot for help. it guided me to the environment variable in the render app and eventually deployed my app and connected it to the internet. the app also locked itself after putting in the 6-digit authentication code so I removed it in favour of keeping the
 - **Committed?** yes / no — commit message: yes
 ---
+
+- - -
+
 
 ## Things that broke (running list)
 
