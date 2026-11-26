@@ -16,12 +16,7 @@ Your prototype shows *what* the product looks like. This document explains *why*
 
 **Solution:** FixerUpper is a platform that connects customers with independent appliance repair technicians. Customers can search for technicians based on their location, the type of appliance they can repair and their availability on specific dates. They can then submit a repair request, receive quotes and decide which technician best suits their needs at the given time. This is simpler than having to contact several businesses individually and allows customers to find and compare options in one place.
 
-**Revenue:** The business would make money through advertising and revenue-sharing arrangements with technicians who use the platform to promote their services. There is a fee for customers as well for the convenience of this server. This gives independent technicians another way to reach potential customers while generating income for FixerUpper, and for customers generate income for FixerUpper by paying commissions with each job that is paid for. 
-
-- $5 customer convenience fee per successful booking.
-- $5 technician platform fee per successful booking.
-- $10 total revenue per booking when both fees are collected.
-  
+**Revenue:** FixerUpper would make money by charging both customers and technicians a small fee for each successful booking. Customers would pay an additional $5 convenience fee when they book a repair, while technicians would pay a $5 platform fee for each booking they receive. The customer fee covers the convenience of finding and comparing repair services, while the technician fee gives independent businesses another way to reach potential customers. This means FixerUpper would make $10 in total fees for each successful booking when both fees are collected.
 
 ## 2. Where IT creates value
 
@@ -33,7 +28,7 @@ This product creates **value** by improving the scale of appliance repair busine
 
 The platform also creates **value** through data. By tracking previous repair requests and fulfilled orders, appliance information and customer history, the application could make it easier for returning customers to access their repair records and find technicians who have experience with specific appliances based on past performance with new and returning customers. There are also ways to report issues when they come up.
 
-Finally, the application could create **switching costs**. A customer may normally rely on a local technician or someone they know, but that person may not be available to come for several weeks. By having a platform that connects customers with multiple technicians, competitive pricing and easier booking. Over time, saved repair histories and previous bookings could make customers more likely to continue using the application rather than returning to their previous methods of finding repair services. This has a network effect by growing its value to each customer as more people use this app.
+Finally, the application could create **switching costs**. A customer may normally rely on a local technician or someone they know, but that person might not be available for several weeks. FixerUpper gives customers another option by connecting them with multiple technicians, allowing them to compare prices and find someone who is available sooner. Over time, saved repair histories and previous bookings could make customers more likely to continue using the application rather than going back to their previous methods of finding repair services. Having all their repair information in one place makes the platform more convenient to keep using.
 
 
 ## 3. Network effects
@@ -89,15 +84,14 @@ However, relying on third-party providers also creates risks. If a cloud provide
 
 **What could go wrong — for your customers, their data, or society? What would you do about it?**
 
+One risk is that a customer could hire an inexperienced or dishonest technician, especially since these people would be entering their homes. To reduce this risk, I would require technicians to verify their identity and qualifications before advertising their services on the app. Customer reviews would also help people decide which technicians they feel comfortable hiring.
 
-One risk is the customer hires an inexperienced or dishonest person, especially since these people would be entering their homes. To avoid this I would have the technicians verify their identity and qualifications before advertising on the app. Customer reviews would also help people decide who they feel comfortable to hire.
+Another concern is the personal information the platform would collect, such as home addresses, phone numbers and payment details. If this information were stolen, it could put customers at risk. I would use secure payment services, limit access to personal information and make sure the platform has proper security measures in place to protect customer data.
 
-It would also hold personal information such as home addresses, phone numbers and payment details. “If this information was stolen it could put customers at risk.”I would use secure payment services and make sure that personal information is protected properly.
+Pricing could also become a problem. A technician might advertise a low price to attract customers but then charge much more once they arrive. To avoid this, I would require technicians to be clear about their prices and any additional costs before a customer agrees to a repair. Customers should know what they are agreeing to before booking.
 
-Another problem is price. This would allow a tech to advertize a low price to get people in the door, but charge a lot more once they’re there.I like to know that technicians are upfront on their prices and any other costs before a customer agrees to a repair.
+The application could also experience technical problems or show technicians as available when they are not. This could waste a customer's time, especially when they need an appliance repaired quickly. Keeping technician listings updated and regularly maintaining the application would help reduce these problems.
 
-The app may also have technical problems, or show technicians as available when they are not. When someone needs an appliance repaired it might be a waste of their time.Updating listings and maintaining the application may help with this.
+The business should make money by providing a useful service, not by allowing misleading prices or putting customers at risk of breaches.
 
-The business should make money by offering a useful service, not by allowing misleading advertisements or putting customers at risk of data breaches.
-
-**AI use: I used Copilot to edit my code and provide working replications of my personal ideas. I also used ChatGPT to cross reference different ideas in order to view both sides of the options presented to me through my choice, every idea used in this case is thought of and put into action by its creator**
+**I used GitHub Copilot through Visual Studio Code to assist with coding, troubleshooting and developing the website. I used ChatGPT to get feedback on my business case, check my explanations and identify areas that needed work. I also used Render to deploy the application. I reviewed the suggestions and made the final decisions about the project.**
