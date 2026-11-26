@@ -90,6 +90,8 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 ---
 |11/26|I skipped adding automatic replies to requests due to it being potentially misleading|this is not that important for a real company unless you'd want to make it seem more efficient| this would be easy and inexpensive to add into a project.
 ---
+|11/26|I skipped adding a way to process real payments|a real company needs to secure funds before an issue is raised|moderately costly to add and connect to a payment provider
+---
 
 ## Reflection (fill in at the end)
 
