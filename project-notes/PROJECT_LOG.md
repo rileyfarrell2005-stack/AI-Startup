@@ -41,12 +41,22 @@ yes
   1.can you remove the 2 factor authentication code due to it causing a server error
   2. can you connect to render and let me know how to fix these coding errors in order to deploy my app.
 - **What worked:** the app successfully launched
-- **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables that I hadn't noticed, but I corrected what it had asked me to do by asking copilot for help. it guided me to the environment variable in the render app and eventually deployed my app and connected it to the internet. the app also locked itself after putting in the 6-digit authentication code so I removed it in favour of keeping the
+- **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables that I hadn't noticed, but I corrected what it had asked me to do by asking copilot for help. it guided me to the environment variable in the render app and eventually deployed my app and connected it to the internet. the app also locked itself after putting in the 6-digit authentication code so I removed it in favour of keeping the regular authentication
 - **Committed?** yes / no — commit message: yes
 ---
 
 - - -
 
+### Session — [11/26] — driver: [Riley]
+
+ **Goal for this session:** test app and configure sign in tools
+- **Key prompts we gave Copilot** (paste the important ones):
+  1. add a privacy control center under setting, to view View stored account information.
+  2. add allow or disallown notifications for all parties who use this app
+- **What worked:** the sign in page
+- **What broke, and how we fixed it:** the sign in page broke and crashed several times due to this change, I asked copilot to undo code that broke the app until I had a competent login/logout system, then kept building it piece by piece, testing everything as I went
+- **Committed?** yes / no — commit message: yes
+---
 
 ## Things that broke (running list)
 
@@ -57,7 +67,7 @@ yes
 |11/24| 
 |11/24|
 |11/25|
-|11/25|
+|11/26|the sign in page broke and locked me out of the app, was trying to add a 2nd password protected wall for security, playing around with copilot eventually led me to fixing the login screen.
 
 ## What a real version would need
 
@@ -66,7 +76,7 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 | Feature we faked or skipped | Why a real company would need it | How hard / expensive? |
 |---|---|---|
 
-|11/24|
+|11/24|faked true 3rd party authentication , a real company needs layers to protect its costumers against data breaches, this would be expensive for the company to implement as it requires an auditor to monitor the servers
 |11/24|
 |11/25|
 |11/25|
