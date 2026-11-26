@@ -87,9 +87,9 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 |11/24| we faked the request for a repair screen to as a placeholder|this app does not automatically request technicians for customers since this is a fictional app| A real company would require this feature as it is central to functionality within the app| THis feature would be easy and inexpensive to add into my app
 ---
 |11/25|I skipped adding a chat bot into the app due to it not being important for my current project|A real company would need this because it provides an extra pair of ears to answer easier questions about simpler customer/technician thoughts and/or complaints.
-
-
-|11/26|
+---
+|11/26|I skipped adding automatic replies to requests due to it being potentially misleading|this is not that important for a real company unless you'd want to make it seem more efficient| this would be easy and inexpensive to add into a project.
+---
 
 ## Reflection (fill in at the end)
 
@@ -97,8 +97,14 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 2. Which parts were easy, and which were hard? Why do you think that is?
 3. If a competitor had the same AI tool, how long would it take them to copy your site?
 
-1.how easy it was to code and fine tune the project when AI is helping build the code
-2.launching the app and putting it together were challenging because it used the most manual effort to find the right spots
-3.not long, it used readily available tools
-4.d
-4. 
+
+## Reflection
+
+### 1. What surprised you most about building software with AI?
+What surprised me most about building software with AI was how easy it was to write code and fine-tune the project along the way. Before starting this project, I expected that creating a website with several different features would require a lot more coding knowledge and time. However, using AI made it much easier to explain what I wanted the application to do and get help turning those ideas into working features. One thing I found especially useful was being able to make changes as the project developed. If I wanted to add something, improve the layout or change how a feature worked, I could explain the problem and get suggestions for how to fix it. This made it easier to experiment without having to build everything from scratch. I also learned that AI can help with more than just writing code. It can assist with troubleshooting, explaining errors and suggesting ways to improve something that is already built. The biggest surprise was how quickly an idea could turn into something that people could actually interact with. It showed me that developing a basic application is much more accessible than I originally thought.
+
+### 2. Which parts were easy, and which were hard? Why do you think that is?
+The easiest part was probably getting the initial website built and making changes to its features. AI could generate much of the code needed to create different sections of FixerUpper, which saved a considerable amount of time. It was also relatively easy to ask for adjustments and improve parts of the website without having to understand every line of code myself. The more challenging part was launching the application and getting everything working together. This required more manual effort because I had to find the correct files, understand where changes needed to be made and figure out how the different parts of the application connected. Even when AI provided the code, I still had to make sure it was being added in the right place and that it worked with the rest of the project. I think the difference comes down to how AI handles individual tasks compared with managing an entire project. It can generate code fairly quickly when given clear instructions, but putting everything together requires more attention and understanding. I learned that using AI does not mean every part of development becomes automatic. You still need to check the work, make decisions and understand what you are building.
+
+### 3. If a competitor had the same AI tool, how long would it take them to copy your site?
+I don't think it would take a competitor very long to create a website similar to FixerUpper if they had access to the same AI tools. Most of the features were developed using readily available technology, and AI makes it much easier to build an application without having years of coding experience. A competitor could use similar prompts and develop something with technician listings, customer requests, booking features and other basic functions in a relatively short amount of time. However, copying the website would not necessarily mean copying the business successfully. The more difficult part would be getting independent technicians to join, building relationships with them and convincing customers to trust the service. A new competitor would also need to establish a good reputation and collect enough customer reviews to make the platform useful. This connects to the competitive advantage discussed in my business case. The technology itself is not what would make FixerUpper successful because another business could build something similar. Its potential advantage would come from the relationships, customer trust, repair history and network developed over time. Overall, this project showed me that AI can make building software much easier, but creating a business that people actually want to use requires much more than having a working website.
