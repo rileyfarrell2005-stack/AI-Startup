@@ -66,10 +66,14 @@ yes
 |---|---|---|---|
 | | | | |
 
-|11/24| 
-|11/24|
-|11/25|
-|11/26|the sign in page broke and locked me out of the app, was trying to add a 2nd password protected wall for security, playing around with copilot eventually led me to fixing the login screen.
+|11/24|formatting issues at the start| I researched a little bit into what my issues were and asked copilot to change scripts or add things It had forgotten previously.
+---
+|11/24|the app crashed a lot|I went on render and tried adding variables to the deployement| this fixed the deployment issue as I now had the correct code
+---
+|11/26|the sign in page broke and locked me out of the app| was trying to add a 2nd password protected wall for security| playing around with copilot eventually led me to fixing the login screen.
+---
+|11/26| The entire app became unusable due to coding errors by copilot while polishing the account database feature, this lead to me running out of free AI use to help with the finishing touches on my app|reported to professor via email but undoubtedly, a huge issue.
+---
 
 ## What a real version would need
 
@@ -79,9 +83,13 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 |---|---|---|
 
 |11/24|faked true 3rd party authentication , a real company needs layers to protect its costumers against data breaches, this would be expensive for the company to implement as it requires an auditor to monitor the servers
-|11/24|
-|11/25|
-|11/25|
+---
+|11/24| we faked the request for a repair screen to as a placeholder|this app does not automatically request technicians for customers since this is a fictional app| A real company would require this feature as it is central to functionality within the app| THis feature would be easy and inexpensive to add into my app
+---
+|11/25|I skipped adding a chat bot into the app due to it not being important for my current project|A real company would need this because it provides an extra pair of ears to answer easier questions about simpler customer/technician thoughts and/or complaints.
+
+
+|11/26|
 
 ## Reflection (fill in at the end)
 
