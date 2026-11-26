@@ -3,6 +3,7 @@
   "use strict";
 
   const STORE_KEY = "fixerupperDemoJobs";
+  const ISSUE_STORE_KEY = "fixerupperCustomerIssues";
   const CUSTOMER_FEE = 5;
   const TECHNICIAN_FEE = 5;
   const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: "CAD" });
@@ -13,12 +14,25 @@
       return Array.isArray(stored) ? stored : [];
     } catch (error) { return []; }
   };
+  const getCustomerIssues = function () {
+    try {
+      const stored = JSON.parse(localStorage.getItem(ISSUE_STORE_KEY) || "[]");
+      return Array.isArray(stored) ? stored : [];
+    } catch (error) { return []; }
+  };
   let jobs = getJobs();
+  let customerIssues = getCustomerIssues();
   let selectedTechnicianId = null;
 
   function saveJobs() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify(jobs));
+      return true;
+    } catch (error) { return false; }
+  }
+  function saveCustomerIssues() {
+    try {
+      localStorage.setItem(ISSUE_STORE_KEY, JSON.stringify(customerIssues));
       return true;
     } catch (error) { return false; }
   }
@@ -320,9 +334,122 @@
         }
         card.appendChild(quote);
       } else if (job.status === "awaiting-quote") addText(card, "p", "job-meta", "The provider can review this request under Provide services.");
+
+      const report = document.createElement("button");
+      report.type = "button";
+      report.className = "button secondary report-issue-button";
+      report.textContent = "Report an issue";
+      const issueStatus = addText(card, "p", "form-status report-issue-status", "");
+      report.addEventListener("click", function () {
+        openCustomerIssueReport(job, issueStatus);
+      });
+      card.append(report, issueStatus);
       list.appendChild(card);
     });
   }
+
+  function openCustomerIssueReport(job, status) {
+    const existing = $("#customer-issue-report");
+    if (existing) existing.remove();
+
+    const panel = document.createElement("section");
+    panel.id = "customer-issue-report";
+    panel.className = "issue-report-panel";
+    addText(panel, "h3", "", "Report an issue");
+    addText(panel, "p", "prototype-note", "Use this for a problem with this repair request or technician. This prototype stores the report only on this device.");
+
+    const form = document.createElement("form");
+    form.className = "issue-report-form";
+
+    const typeLabel = document.createElement("label");
+    typeLabel.textContent = "Issue type";
+    const type = document.createElement("select");
+    type.name = "issueType";
+    type.required = true;
+    ["Choose an issue", "Technician did not respond", "Technician did not arrive", "Unsafe or inappropriate behavior", "Billing or quote concern", "Incorrect or misleading information", "App or account problem", "Other"].forEach(function (label, index) {
+      const option = document.createElement("option");
+      option.value = index === 0 ? "" : label;
+      option.textContent = label;
+      type.appendChild(option);
+    });
+    typeLabel.appendChild(type);
+
+    const detailsLabel = document.createElement("label");
+    detailsLabel.className = "wide-field";
+    detailsLabel.textContent = "Describe the issue";
+    const details = document.createElement("textarea");
+    details.name = "details";
+    details.required = true;
+    details.maxLength = 600;
+    details.rows = 4;
+    details.placeholder = "Explain what happened and include any relevant dates or details.";
+    detailsLabel.appendChild(details);
+
+    const actions = document.createElement("div");
+    actions.className = "issue-report-actions";
+    const submit = addText(actions, "button", "button", "Submit report"); submit.type = "submit";
+    const cancel = addText(actions, "button", "button secondary", "Cancel"); cancel.type = "button";
+    cancel.addEventListener("click", function () { panel.remove(); });
+
+    form.append(typeLabel, detailsLabel, actions);
+    panel.appendChild(form);
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const report = {
+        id: "issue-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+        jobId: job.id,
+        technicianId: job.technicianId,
+        technicianName: job.technicianName,
+        appliance: job.appliance,
+        issueType: String(new FormData(form).get("issueType") || ""),
+        details: String(new FormData(form).get("details") || "").trim(),
+        status: "submitted",
+        createdAt: new Date().toISOString()
+      };
+      customerIssues.unshift(report);
+      if (!saveCustomerIssues()) {
+        customerIssues.shift();
+        status.textContent = "Could not save the report on this device. Check browser storage settings and try again.";
+        panel.remove();
+        return;
+      }
+      status.textContent = "Issue report submitted and saved on this device.";
+      panel.remove();
+      renderCustomerIssues();
+    });
+
+    status.insertAdjacentElement("afterend", panel);
+  }
+
+  function renderCustomerIssues() {
+    let panel = $("#customer-reported-issues");
+    if (!panel) {
+      panel = document.createElement("section");
+      panel.id = "customer-reported-issues";
+      panel.className = "reported-issues-panel";
+      $("#customer-jobs").insertAdjacentElement("afterend", panel);
+    }
+    panel.replaceChildren();
+    if (!customerIssues.length) {
+      addText(panel, "p", "prototype-note", "No issue reports submitted.");
+      panel.hidden = true;
+      return;
+    }
+    panel.hidden = false;
+    addText(panel, "h3", "", "My submitted issue reports");
+    customerIssues.forEach(function (issue) {
+      const card = document.createElement("article");
+      card.className = "reported-issue-card";
+      addText(card, "p", "reported-issue-type", issue.issueType);
+      addText(card, "p", "job-meta", "Technician: " + issue.technicianName + " · " + issue.appliance);
+      addText(card, "p", "", issue.details);
+      addText(card, "p", "reported-issue-status", "Submitted · Stored only on this device");
+      panel.appendChild(card);
+    });
+  }
+
   function updateTechnicianRating(technicianId) {
     const person = findTechnician(technicianId);
     if (!person) return;
@@ -387,7 +514,7 @@
     amount.placeholder = "e.g. 80.00";
     amountLabel.appendChild(amount); fields.appendChild(amountLabel);
     const messageLabel = document.createElement("label"); messageLabel.className = "wide-field"; messageLabel.textContent = "Message / what's included";
-    const message = document.createElement("textarea"); message.name = "message"; message.required = true; message.maxLength = 400; message.rows = 2; message.placeholder = "Explain what's included or next steps";
+    const message = document.createElement("textarea"); message.name = "message"; message.required = true; message.maxLength = 400; message.rows = 2; message.placeholder = "Explain what's included and any assumptions about the repair.";
     if (job.quote) message.value = job.quote.message;
     messageLabel.appendChild(message); fields.appendChild(messageLabel);
     const submit = addText(form, "button", "button", replacing ? "Update fixed-price quote" : "Send quote"); submit.type = "submit";
@@ -404,7 +531,7 @@
     });
     parent.appendChild(form);
   }
-  function renderAll() { renderTechnicians(); renderCustomerJobs(); renderProviderJobs(); }
+  function renderAll() { renderTechnicians(); renderCustomerJobs(); renderProviderJobs(); renderCustomerIssues(); }
 
   $("#job-area-filter").addEventListener("input", renderProviderJobs);
   $("#clear-demo-data").addEventListener("click", function () {
