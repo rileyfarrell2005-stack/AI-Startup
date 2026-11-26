@@ -4,7 +4,7 @@ Keep this up to date as you go — a few lines per work session is enough. It's 
 
 **Team name:** Riley Farrell
 **Startup name:** FixerUpper Appliance Repair
-**Live site link:** https://fixerupperappliancerepair.onrender.com
+**Live site link:** https://ai-startup-fixerupperappliancerepair.onrender.com/#home
 
 ---
 
@@ -23,6 +23,8 @@ Copy this block for each session.
 - **What broke, and how we fixed it:** had to change some things as I learned how to use the copilot
 - **Committed?** yes / no — commit message: 
 yes
+---
+---
 ### Session — [11/25] — driver: [Riley]
 
  **Goal for this session:** build customer and technician data
