@@ -78,7 +78,7 @@
       </section>
 
       <section id="provider" data-view hidden>
-        <div class="page-heading"><p class="eyebrow">Technician space</p><h1>Repair requests</h1><p class="lead">Review local demo requests and reply with a fixed-price quote. Requested appointment dates and times are not confirmed bookings.</p></div>
+        <div class="page-heading"><p class="eyebrow">Technician space</p><h1>Repair requests</h1><p class="lead">Choose a fictional technician to review their local demo requests and reply with a fixed-price quote. Requested appointment dates and times are not confirmed bookings.</p></div>
         <section class="repair-request-callout" aria-label="Request a repair">
           <div><p class="eyebrow">Need a repair yourself?</p><h2>Technicians can be customers too</h2><p>Search providers, browse profiles, and send a quote request using the customer tools.</p></div>
           <a class="button" href="#services">Find a technician <span aria-hidden="true">→</span></a>
@@ -94,9 +94,11 @@
           </div>
         </section>
         <p class="prototype-note technician-fee-note">On a completed service, the technician's estimated earnings are the quoted repair price minus the $5 platform fee. Declined requests and incomplete services are not charged.</p>
+        <label class="filter-search provider-area-filter">View requests as technician<select id="provider-identity"><option value="">Choose a demo technician</option></select></label>
+        <p class="prototype-note">This is a demo selection, not a secure account. Anyone using this browser can select any technician.</p>
         <label class="filter-search provider-area-filter">Filter requests by area<input id="job-area-filter" type="search" placeholder="Enter a city or neighbourhood"></label>
         <div id="provider-jobs" class="job-list"></div>
-        <p id="provider-jobs-empty" class="empty-state" hidden>No requests match this area filter.</p>
+        <p id="provider-jobs-empty" class="empty-state" hidden></p>
         <p class="prototype-note">Requests are local to this browser and are not shared with real technicians or other devices.</p>
       </section>
 

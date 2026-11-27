@@ -385,10 +385,14 @@
   }
   function renderProviderJobs() {
     const list = $("#provider-jobs");
+    const technicianId = $("#provider-identity").value;
     const query = $("#job-area-filter").value.trim().toLowerCase();
-    const filtered = jobs.filter(function (job) { return !query || job.area.toLowerCase().includes(query); });
+    const filtered = jobs.filter(function (job) {
+      return technicianId && job.technicianId === technicianId && (!query || job.area.toLowerCase().includes(query));
+    });
     list.replaceChildren();
     $("#provider-jobs-empty").hidden = filtered.length > 0;
+    $("#provider-jobs-empty").textContent = !technicianId ? "Choose a demo technician to see their requests." : query ? "No requests for this technician match the area filter." : "No requests for this technician yet.";
     filtered.forEach(function (job) {
       const card = document.createElement("article"); card.className = "job-card";
       const top = document.createElement("div"); top.className = "job-top";
@@ -422,14 +426,7 @@
     const form = document.createElement("form"); form.className = "quote-form";
     addText(form, "h3", "", replacing ? "Replace with a fixed-price quote" : "Send a quote");
     const fields = document.createElement("div"); fields.className = "quote-fields";
-    function addInput(labelText, name, value, placeholder) {
-      const label = document.createElement("label"); label.textContent = labelText;
-      const input = document.createElement("input"); input.name = name; input.required = true;
-      if (name === "technician") input.maxLength = 60;
-      input.value = value || ""; input.placeholder = placeholder || "";
-      label.appendChild(input); fields.appendChild(label); return input;
-    }
-    addInput("Your technician name", "technician", job.quote && job.quote.technician || job.technicianName);
+    addText(form, "p", "job-meta", "Responding as " + findTechnician(job.technicianId).name);
     const amountLabel = document.createElement("label");
     amountLabel.textContent = "Fixed repair price (CAD)";
     const amount = document.createElement("input");
@@ -448,8 +445,7 @@
       event.preventDefault();
       if (!form.reportValidity()) return;
       const values = new FormData(form);
-      job.technicianName = String(values.get("technician")).trim();
-      job.quote = { technician: job.technicianName, amount: Number(values.get("amount")), message: String(values.get("message")).trim() };
+      job.quote = { technician: findTechnician(job.technicianId).name, amount: Number(values.get("amount")), message: String(values.get("message")).trim() };
       job.status = "quote-sent";
       saveJobs(); renderAll();
     });
@@ -457,7 +453,20 @@
   }
   function renderAll() { renderTechnicians(); renderCustomerJobs(); renderProviderJobs(); }
 
+  TECHNICIANS.forEach(function (person) {
+    const option = document.createElement("option");
+    option.value = person.id;
+    option.textContent = person.name;
+    $("#provider-identity").appendChild(option);
+  });
+  $("#provider-identity").addEventListener("change", renderProviderJobs);
   $("#job-area-filter").addEventListener("input", renderProviderJobs);
+  window.addEventListener("storage", function (event) {
+    if (event.key !== STORE_KEY && event.key !== null) return;
+    jobs = getJobs();
+    TECHNICIANS.forEach(function (person) { updateTechnicianRating(person.id); });
+    renderAll();
+  });
   $("#clear-demo-data").addEventListener("click", function () {
     jobs = [];
     saveJobs();

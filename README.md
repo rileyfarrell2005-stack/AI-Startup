@@ -52,6 +52,8 @@ The entry screen is a local demo gate only. It does not use passwords or provide
 
 After entering the demo, open **Settings / help** to find notification preferences above the help topics. Browser alerts require browser support and permission; otherwise updates appear in the app. Updates work only while the page is open and are limited to this device.
 
+Under **Provide services**, select a fictional technician to see requests addressed to that technician in the same browser. This selection is not an account or access control, and requests are not shared across devices.
+
 ## Step 4 — Build with Copilot
 
 1. Open the **Chat** panel (the speech-bubble/Copilot icon, top or left side).
