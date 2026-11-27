@@ -17,13 +17,13 @@ html { min-height: 100%; background: #fae9e5; }
 body { min-height: 100vh; margin: 0; padding: 18px; color: var(--text); background: #fae9e5; font-family: var(--font); line-height: 1.55; }
 a { color: var(--brand); }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #df8479; outline-offset: 3px; }
-.app-frame { position: relative; max-width: 1080px; min-height: calc(100vh - 36px); margin: 0 auto; overflow: hidden; border: 7px solid #f1c8c0; border-radius: 30px; background: var(--background); box-shadow: 0 16px 50px #74413b18; }
+.app-frame { position: relative; display: flex; flex-direction: column; max-width: 1080px; min-height: calc(100vh - 36px); margin: 0 auto; overflow: hidden; border: 7px solid #f1c8c0; border-radius: 30px; background: var(--background); box-shadow: 0 16px 50px #74413b18; }
 .site-header { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px clamp(18px, 5vw, 52px); border-bottom: 1px solid var(--border); background: var(--surface); }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-size: 1.2rem; font-weight: 850; letter-spacing: -.04em; }
 .brand-mark { display: inline-grid; place-items: center; width: 35px; height: 35px; border-radius: 12px 12px 12px 4px; background: var(--brand); color: white; }
 .header-note { color: var(--muted); font-size: .85rem; }
 .auth-status { color: var(--brand-dark); font-size: .8rem; font-weight: 700; }
-main { max-width: 930px; min-height: 590px; margin: 0 auto; padding: clamp(28px, 5vw, 54px) clamp(18px, 5vw, 48px) 118px; }
+main { flex: 1 0 auto; width: 100%; max-width: 930px; min-height: 590px; margin: 0 auto; padding: clamp(28px, 5vw, 54px) clamp(18px, 5vw, 48px) 118px; }
 h1, h2, h3, p { margin-top: 0; }
 h1, h2, h3 { line-height: 1.2; letter-spacing: -.035em; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 11px 18px; border: 1px solid var(--brand); border-radius: 10px; background: var(--brand); color: #fff; font: inherit; font-weight: 750; text-align: center; text-decoration: none; cursor: pointer; transition: background .15s, transform .15s; }
