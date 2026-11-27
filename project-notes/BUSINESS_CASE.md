@@ -58,9 +58,11 @@ My prototype demonstrates this concept through its technician listings and servi
 - Which of your advantages get *stronger* over time (data, network, brand, switching costs)?
 
 
-Although a competitor can copy the application itself, the real competitive advantage would come from the network of technicians and customers using the platform. The website and its features are relatively easy to **replicate**, but establishing **disruptive technology** for a repair service network and gaining customer trust would take more time.
+Although a competitor could replicate the website and its features, building a reliable network of technicians, developing customer trust and collecting positive reviews would take considerably more time.
 
 Using the **resource based view**, the business could develop several competitive advantages. First, it provides **value** by helping customers find available technicians, compare prices and arrange repairs more efficiently. It also provides value to independent technicians by giving them another way to advertise their services and generate business. Second, the platform could become **rare** if it establishes a strong network of local technicians with verified qualifications, competitive pricing and reliable availability. Third, it would become more difficult to **imitate** as the business develops relationships with technicians, collects customer reviews and builds a history of completed repairs. Finally, the platform would need to be properly **organized** to take advantage of these resources through reliable listings, customer support, technician verification and an effective booking system.
+
+The platform would also need to be difficult to substitute. Customers can already find repair technicians through local businesses, online searches and word-of-mouth recommendations. FixerUpper would need to offer something those alternatives do not provide as conveniently: comparing multiple technicians, availability and prices in one place, while keeping previous repair information together.
 
 A competitor with a larger budget could potentially develop a similar application and spend more money on advertising to attract customers. However, they would still need to recruit independent technicians, establish relationships with them, build customer trust and collect enough reviews to become a reliable alternative. Depending on the market, this could take months or even years to develop into an established network. Having a larger advertising budget does not automatically mean customers will trust or prefer their platform.
 
@@ -92,6 +94,6 @@ Pricing could also become a problem. A technician might advertise a low price to
 
 The application could also experience technical problems or show technicians as available when they are not. This could waste a customer's time, especially when they need an appliance repaired quickly. Keeping technician listings updated and regularly maintaining the application would help reduce these problems.
 
-The business should make money by providing a useful service, not by allowing misleading prices or putting customers at risk of breaches.
+The business should make money by providing a useful service, protecting customer information and treating both customers and technicians fairly.
 
 **I used GitHub Copilot through Visual Studio Code to assist with coding, troubleshooting and developing the website. I used ChatGPT to get feedback on my business case, check my explanations and identify areas that needed work. I also used Render to deploy the application. I reviewed the suggestions and made the final decisions about the project.**
