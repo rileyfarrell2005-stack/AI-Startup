@@ -94,6 +94,6 @@ Pricing could also become a problem. A technician might advertise a low price to
 
 The application could also experience technical problems or show technicians as available when they are not. This could waste a customer's time, especially when they need an appliance repaired quickly. Keeping technician listings updated and regularly maintaining the application would help reduce these problems.
 
-The business should make money by providing a useful service, protecting customer information and treating both customers and technicians fairly.
+The business should make money by providing a useful service, protecting customer information from the risk of data breaches and treating both customers and technicians fairly.
 
 **I used GitHub Copilot through Visual Studio Code to assist with coding, troubleshooting and developing the website. I used ChatGPT to get feedback on my business case, check my explanations and identify areas that needed work. I also used Render to deploy the application. I reviewed the suggestions and made the final decisions about the project.**
