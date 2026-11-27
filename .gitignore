@@ -1,6 +1,0 @@
-node_modules/
-.fixerupper-data/
-.env
-*.sqlite
-*.sqlite-shm
-*.sqlite-wal
