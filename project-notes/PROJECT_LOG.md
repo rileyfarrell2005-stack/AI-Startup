@@ -75,16 +75,16 @@ Copy this block for each session.
 
 ## What a real version would need
 
-Everything we wanted but faked or left out — real logins, a real database, payments, security, moderation, an app, staff, etc. For each one, say **why** it's needed and roughly **how hard or expensive** you think it would be.
+The current GitHub Pages prototype uses a local demo gate and browser storage; it does not provide real accounts, shared data, or payment processing. A production service would need the following capabilities. Effort and cost estimates are relative and would depend on the provider, transaction volume, and launch scope.
 
 | Feature we faked or skipped | Why a real company would need it | How hard / expensive? |
 |---|---|---|
-| faked true 3rd party authentication | a real company needs layers to protect its customers against data breaches | this would be expensive for the company to implement as it requires an auditor to monitor the servers |
-| we faked the requests going to the technicians inbox since you are unable to use another technicians account in this prototype | this app does not automatically request technicians for customers since this is a fictional app. A real company would require this feature as it is central to functionality within the app | Moderately difficult and costly: a real multi-user system would need a shared database, authentication, access controls and ongoing maintenance. |
-| I skipped adding a chat bot into the app due to it not being important for my current project | A real company would need this because it provides an assist answer easier questions about simpler customer/technician thoughts and/or complaints | this would be mildly expensive to add and code to have certain answers |
-| I skipped adding automatic replies to requests due to it being potentially misleading | this is not that important for a real company unless you'd want to make it seem more efficient | this would be easy and inexpensive to add into a project |
-| I skipped adding a way to process real payments | a real company needs to secure funds before an objective is completed | moderately costly to add and connect to a payment provider among other things |
-| Shared cloud database | Customers and technicians need to access the same requests and updates across devices. | Moderately difficult and costly: it would require hosting, secure access controls, backups and ongoing maintenance. |
+| Real authentication and access control | The current sign-in is only a local demo gate. A real service needs protected accounts and server-side authorization so customers and technicians can access only the data and actions appropriate to their roles. | Moderate to high effort, with ongoing provider and security-maintenance costs. A third-party sign-in provider can help, but does not replace authorization or broader security work. |
+| Shared backend and database | Requests, quotes, bookings, and account data need to stay consistent and be available to the customer and technician across devices. | Moderate to high effort. It requires a hosted backend, access controls, backups, monitoring, and ongoing maintenance. |
+| Payment processing | If the business charges booking fees, it needs a payment provider to collect them and record payment status. The business would also need processes for refunds, disputes, and any technician payouts. The prototype does not process payments or store card details. | Moderate to high effort to integrate and test. The provider charges transaction fees, and the business needs clear payment and refund policies. |
+| Notifications and customer support | Customers and technicians need timely updates about requests, quotes, and booking changes, plus a way to get help or report problems. | Moderate effort to integrate email or text services; usage may have recurring costs. Support and moderation also require ongoing staff time. |
+| Technician verification and marketplace moderation | Customers need trustworthy listings. A real service would need a process for checking relevant identity or qualifications, handling reports, and responding to disputes; exact checks depend on location and service scope. | High ongoing effort and cost because checks, moderation, and dispute handling require staff and may involve third-party services. |
+| Privacy and security operations | The service would handle personal household information and, depending on the payment design, payment-related data. It needs data minimization, secure storage and transmission, controlled access, backups, and an incident-response process. | Ongoing effort and cost. The level depends on the data collected, the service's scale, and applicable legal requirements. |
 ---
 
 ## Reflection
