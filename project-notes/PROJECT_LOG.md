@@ -2,7 +2,7 @@
 
 Keep this up to date as you go — a few lines per work session is enough. It's much harder to reconstruct at the end.
 
-**Team name:** Individual Project
+**Team name:** Riley Farrell
 **Startup name:** FixerUpper Appliance Repair
 **Live site link:** https://rileyfarrell2005-stack.github.io/AI-Startup/
 
