@@ -4,9 +4,6 @@
 
   const STORE_KEY = "fixerupperDemoJobs";
   const SIGNIN_KEY = "fixerupperDemoSignedIn";
-  const DEMO_USERNAME = "demo-user";
-  const DEMO_EMAIL = "demo@fixerupper.test";
-  const DEMO_PASSWORD = "demo-access";
   const CUSTOMER_FEE = 5;
   const TECHNICIAN_FEE = 5;
   const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: "CAD" });
@@ -138,17 +135,7 @@
 
   $("#signin-form").addEventListener("submit", function (event) {
     event.preventDefault();
-    const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    const values = new FormData(form);
-    const username = String(values.get("username") || "").trim().toLowerCase();
-    const email = String(values.get("email") || "").trim().toLowerCase();
-    const password = String(values.get("password") || "");
     const status = $("#signin-status");
-    if (username !== DEMO_USERNAME || email !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
-      status.textContent = "Those demo sign-in details do not match. Use the fixed credentials shown above.";
-      return;
-    }
     try {
       localStorage.setItem(SIGNIN_KEY, "true");
     } catch (error) {
