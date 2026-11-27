@@ -110,6 +110,7 @@ input::placeholder, textarea::placeholder { color: #a49a96; }
 .signin-card { max-width: 600px; }
 .signin-card .form-note { line-height: 1.7; }
 .wide-field { grid-column: 1 / -1; }
+.demo-warning { margin: 0; padding: 11px 14px; border: 1px solid #e7b5ac; border-radius: 10px; background: var(--brand-soft); color: var(--brand-dark); font-size: .88rem; }
 .form-card > .button, .form-card > .form-note, .form-card > .form-status { grid-column: 1 / -1; justify-self: start; }
 .form-note, .form-status { margin: 0; }
 .form-status { color: var(--brand-dark); font-weight: 750; }
