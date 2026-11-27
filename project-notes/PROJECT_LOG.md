@@ -4,7 +4,7 @@ Keep this up to date as you go — a few lines per work session is enough. It's 
 
 **Team name:** Riley Farrell
 **Startup name:** FixerUpper Appliance Repair
-**Live site link:** https://ai-startup-fixerupperappliancerepair.onrender.com/#home
+**Live site link:** https://rileyfarrell2005-stack.github.io/AI-Startup/
 
 ---
 
