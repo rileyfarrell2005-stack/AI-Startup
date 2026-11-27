@@ -12,62 +12,57 @@ Keep this up to date as you go — a few lines per work session is enough. It's 
 
 Copy this block for each session.
 
-### Session — [11/24) — driver: [Riley]
+### Session — [11/24] — driver: [Riley]
 
-- **Goal for this session:** Learn to code it and test Copilots abilities.
+- **Goal for this session:** Learn to code it and test Copilot's abilities.
 - **Key prompts we gave Copilot**  
   1. can you add a code for my website, called fixerupper which is an online appliance repair service where both customers and technicians can interact
   2. so next we will work on how the app works, it will bring you to a homescreen that has 3 options at the bottom . "request services" , " provide services" and the third one being settings/customer help, once you chose the one that applies to you by clicking on the screen, you are redirected to a screen of listings for available resources and filters to filter out any service providers you may not be seeking at this particular monet, the app colour will be read which will be bordered around the app in a light but easy to read fashion, searches will provide the people in your area that have the quickest time to come repair your appliance, the filters in the app will help make this work, in order to book you click a book service button once you click on someones profile and fill out a brief statement of the problem and what appliance has the problem, they will then come back with a quote for the work and the customer will decide whether they would like the service or not, they are able to rate technicians and the app does not meet with customers, just the people who use it
      
 - **What worked:** everything worked well for the opening stage of the project
 - **What broke, and how we fixed it:** had to change some things as I learned how to use the copilot
-- **Committed?** yes / no — commit message: 
-yes
----
+- **Committed?** yes
 ---
 ### Session — [11/25] — driver: [Riley]
 
- **Goal for this session:** build customer and technician data
+- **Goal for this session:** build customer and technician data
 - **Key prompts we gave Copilot** (paste the important ones): 
   1. allow customers to Search by appliance type (fridge, washer, dryer, dishwasher, etc.).
   2. allow customers to create an account
-- **What worked:** adding the account system was pretty easy but tedious,as there was alot of components I added to make the system more user friendly,as well as better data protection
+- **What worked:** adding the account system was pretty easy but tedious, as there was a lot of components I added to make the system more user friendly, as well as better data protection
 - **What broke, and how we fixed it:** I figured out what went wrong with the code and tested it multiple times to make sure it worked
-- **Committed?** yes / no — commit message: yes
----
+- **Committed?** yes
 ---
 ### Session — [11/25] — driver: [Riley]
 
- **Goal for this session:** deploy app and see what the happens.
+- **Goal for this session:** deploy app and see what the happens.
 - **Key prompts we gave Copilot** (paste the important ones):
   1.can you remove the 2 factor authentication code due to it causing a server error
   2. can you connect to render and let me know how to fix these coding errors in order to deploy my app.
 - **What worked:** the app successfully launched
 - **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables that I hadn't noticed, but I corrected what it had asked me to do by asking copilot for help. it guided me to the environment variable in the render app and eventually deployed my app and connected it to the internet. the app also locked itself after putting in the 6-digit authentication code so I removed it in favour of keeping the regular authentication
-- **Committed?** yes / no — commit message: yes
+- **Committed?** yes
 ---
-
-- - -
 
 ### Session — [11/26] — driver: [Riley]
 
- **Goal for this session:** test app and configure sign in tools
+- **Goal for this session:** test app and configure sign in tools
 - **Key prompts we gave Copilot** (paste the important ones):
   1. add a privacy control center under setting, to view View stored account information.
   2. add allow or disallown notifications for all parties who use this app
 - **What worked:** the sign in page
 - **What broke, and how we fixed it:** the sign in page broke and crashed several times due to this change, I asked copilot to undo code that broke the app until I had a competent login/logout system, then kept building it piece by piece, testing everything as I went
-- **Committed?** yes / no — commit message: yes
+- **Committed?** yes
 ---
 
 ## Things that broke (running list)
 
 | Date | What went wrong | What we tried | What finally fixed it |
 |---|---|---|---|
-|11/24|formatting issues at the start | Copilot was asked to design the app with a simple but efficient look . | copilot had developed exactly what I was looking for
-|11/24|the app crashed a lot|I went on render and tried adding variables to the deployement|this fixed the deployment issue as I now had the correct code|
+|11/24|formatting issues at the start | Copilot was asked to design the app with a simple but efficient look. | copilot had developed exactly what I was looking for |
+|11/24|the app crashed a lot|I went on render and tried adding variables to the deployment|this fixed the deployment issue as I now had the correct code|
 |11/26|the sign in page broke and locked me out of the app| was trying to add a 2nd password protected wall for security| playing around with copilot eventually led me to fixing the login screen.|
-|11/26|The login and logout screen became unusable due to coding errors by copilot while polishing the account database feature| this lead to me running out of free AI use to help with the finishing touches on my app|reported to professor via email but undoubtedly, a huge issue.|
+|11/26|The login and logout screen became unusable due to coding errors by copilot while polishing the account database feature| this led to me running out of free AI use to help with the finishing touches on my app|reported to professor via email but undoubtedly, a huge issue.|
 ---
 
 ## What a real version would need
@@ -76,9 +71,9 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 
 | Feature we faked or skipped | Why a real company would need it | How hard / expensive? |
 |---|---|---|
-| faked true 3rd party authentication | a real company needs layers to protect its costumers against data breaches | this would be expensive for the company to implement as it requires an auditor to monitor the servers |
-| we faked the requests going to the technicians inbox since you are unable to use another technicians account in this prototype | this app does not automatically request technicians for customers since this is a fictional app | A real company would require this feature as it is central to functionality within the app | This feature would be easy and inexpensive to add into my app |
-| I skipped adding a chat bot into the app due to it not being important for my current project | A real company would need this because it provides an assist answer easier questions about simpler customer/technician thoughts and/or complaints | this would be midly expensive to add and code to have certain answers |
+| faked true 3rd party authentication | a real company needs layers to protect its customers against data breaches | this would be expensive for the company to implement as it requires an auditor to monitor the servers |
+| we faked the requests going to the technicians inbox since you are unable to use another technicians account in this prototype | this app does not automatically request technicians for customers since this is a fictional app. A real company would require this feature as it is central to functionality within the app | This feature would be easy and inexpensive to add into my app |
+| I skipped adding a chat bot into the app due to it not being important for my current project | A real company would need this because it provides an assist answer easier questions about simpler customer/technician thoughts and/or complaints | this would be mildly expensive to add and code to have certain answers |
 | I skipped adding automatic replies to requests due to it being potentially misleading | this is not that important for a real company unless you'd want to make it seem more efficient | this would be easy and inexpensive to add into a project |
 | I skipped adding a way to process real payments | a real company needs to secure funds before an objective is completed | moderately costly to add and connect to a payment provider among other things |
 ---

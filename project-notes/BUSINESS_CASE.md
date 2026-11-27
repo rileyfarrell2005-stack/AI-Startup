@@ -12,7 +12,7 @@ Your prototype shows *what* the product looks like. This document explains *why*
 
 **Customer:** individuals with appliances that require repairs.
 
-**Problem:** Finding someone to repair an appliance can be difficult sometimes, especially when local technicians are busy or unavailable for several weeks at a time. Customers often have to seek their options out online, ask friends for recommendations or contact several repair businesses before finding someone who can help in a timely manner. This can take time, which people do not have if an essential appliance is in need of repair, as well as it can be difficult to compare prices and availability if everything is not centeralized.
+**Problem:** Finding someone to repair an appliance can be difficult sometimes, especially when local technicians are busy or unavailable for several weeks at a time. Customers often have to seek their options out online, ask friends for recommendations or contact several repair businesses before finding someone who can help in a timely manner. This can take time, which people do not have if an essential appliance is in need of repair, as well as it can be difficult to compare prices and availability if everything is not centralized.
 
 **Solution:** FixerUpper is a platform that connects customers with independent appliance repair technicians. Customers can search for technicians based on their location, the type of appliance they can repair and their availability on specific dates. They can then submit a repair request, receive quotes and decide which technician best suits their needs at the given time. This is simpler than having to contact several businesses individually and allows customers to find and compare options in one place.
 
@@ -40,7 +40,7 @@ Does your product get more valuable as more people use it?
 - How would you solve the "empty network" problem at launch?
 - Point to the part of your prototype that shows this.
 
-This business platform operates as a **two-sided market** because it connects two different groups into the same plaform: Appliance repair technicians and customers looking for appliance repairs. The purpose of the application is to bring these two groups together in one centralized location where they can interact and arrange repair services.
+This business platform operates as a **two-sided market** because it connects two different groups into the same platform: Appliance repair technicians and customers looking for appliance repairs. The purpose of the application is to bring these two groups together in one centralized location where they can interact and arrange repair services.
 
 The platform exhibits **network effects** and becomes more valuable as more people begin using it. As more technicians join, customers have greater choice, availability and access to technicians who specialize in different appliance types. More customers, in turn, create more potential jobs for technicians, making the platform more attractive to other repair businesses. Customers can also compare availability, services and prices, creating competition between technicians that could lead to better pricing and faster service. This creates a positive feedback loop because growth on either side makes the platform more valuable to the other.
 
@@ -51,8 +51,8 @@ My prototype demonstrates this concept through its technician listings and servi
 
 ## 4. Can it be copied? (the moat question)
 
-**Anyone in this class could rebuild your website in a weekend with the same AI tool. So the code is **not** your competitive advantage.**
-**
+**Anyone in this class could rebuild your website in a weekend with the same AI tool. So the code is not your competitive advantage.**
+
 - What about your business is **valuable, rare, hard to imitate and well-organized** (VRIN)?
 - What would a competitor with a bigger budget need to copy you, and how long would it take?
 - Which of your advantages get *stronger* over time (data, network, brand, switching costs)?
