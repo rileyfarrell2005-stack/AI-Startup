@@ -10,7 +10,7 @@ Your prototype shows *what* the product looks like. This document explains *why*
 - **Solution:** how they solve the current problem now , what we do better?
 - **Revenue:** who pays the platform owner?
 
-**Customer:** Homeowners and people who own appliances that need repairs.
+**Customer:** individuals with appliances that require repairs.
 
 **Problem:** Finding someone to repair an appliance can be difficult sometimes, especially when local technicians are busy or unavailable for several weeks at a time. Customers often have to seek their options out online, ask friends for recommendations or contact several repair businesses before finding someone who can help in a timely manner. This can take time, which people do not have if an essential appliance is in need of repair, as well as it can be difficult to compare prices and availability if everything is not centeralized.
 
