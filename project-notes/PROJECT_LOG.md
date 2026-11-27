@@ -80,8 +80,7 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 | we faked the requests going to the technicians inbox since you are unable to use another technicians account in this prototype | this app does not automatically request technicians for customers since this is a fictional app | A real company would require this feature as it is central to functionality within the app | This feature would be easy and inexpensive to add into my app |
 | I skipped adding a chat bot into the app due to it not being important for my current project | A real company would need this because it provides an assist answer easier questions about simpler customer/technician thoughts and/or complaints | this would be midly expensive to add and code to have certain answers |
 | I skipped adding automatic replies to requests due to it being potentially misleading | this is not that important for a real company unless you'd want to make it seem more efficient | this would be easy and inexpensive to add into a project |
----
-|I skipped adding a way to process real payments|a real company needs to secure funds before an issue is raised|moderately costly to add and connect to a payment provider among other things|
+| I skipped adding a way to process real payments | a real company needs to secure funds before an objective is completed | moderately costly to add and connect to a payment provider among other things |
 ---
 
 ## Reflection (fill in at the end)
