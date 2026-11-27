@@ -17,7 +17,7 @@ Copy this block for each session.
 - **Goal for this session:** Learn to code it and test Copilot's abilities.
 - **Key prompts we gave Copilot**  
   1. can you add a code for my website, called fixerupper which is an online appliance repair service where both customers and technicians can interact
-  2. so next we will work on how the app works, it will bring you to a homescreen that has 3 options at the bottom . "request services" , " provide services" and the third one being settings/customer help, once you chose the one that applies to you by clicking on the screen, you are redirected to a screen of listings for available resources and filters to filter out any service providers you may not be seeking at this particular monet, the app colour will be read which will be bordered around the app in a light but easy to read fashion, searches will provide the people in your area that have the quickest time to come repair your appliance, the filters in the app will help make this work, in order to book you click a book service button once you click on someones profile and fill out a brief statement of the problem and what appliance has the problem, they will then come back with a quote for the work and the customer will decide whether they would like the service or not, they are able to rate technicians and the app does not meet with customers, just the people who use it
+  2. so next we will work on how the app works, it will bring you to a homescreen that has 3 options at the bottom . "request services" , " provide services" and the third one being settings/customer help, once you chose the one that applies to you by clicking on the screen, you are redirected to a screen of listings for available resources and filters to filter out any service providers you may not be seeking at this particular moment, the app colour will be red which will be bordered around the app in a light but easy to read fashion, searches will provide the people in your area that have the quickest time to come repair your appliance, the filters in the app will help make this work, in order to book you click a book service button once you click on someones profile and fill out a brief statement of the problem and what appliance has the problem, they will then come back with a quote for the work and the customer will decide whether they would like the service or not, they are able to rate technicians and the app does not meet with customers, just the people who use it
      
 - **What worked:** everything worked well for the opening stage of the project
 - **What broke, and how we fixed it:** had to change some things as I learned how to use the copilot
@@ -49,7 +49,7 @@ Copy this block for each session.
 - **Goal for this session:** test app and configure sign in tools
 - **Key prompts we gave Copilot** (paste the important ones):
   1. add a privacy control center under setting, to view View stored account information.
-  2. add allow or disallown notifications for all parties who use this app
+  2. add allow or disallow notifications for all parties who use this app
 - **What worked:** the sign in page
 - **What broke, and how we fixed it:** the sign in page broke and crashed several times due to this change, I asked copilot to undo code that broke the app until I had a competent login/logout system, then kept building it piece by piece, testing everything as I went
 - **Committed?** yes — related commit: `Update PROJECT_LOG.md` (`7c5b1ca`)
