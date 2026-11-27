@@ -29,7 +29,7 @@ Copy this block for each session.
 - **Key prompts we gave Copilot** (paste the important ones): 
   1. allow customers to Search by appliance type (fridge, washer, dryer, dishwasher, etc.).
   2. allow customers to create an account
-- **What worked:** adding the account system was pretty easy but tedious, as there was a lot of components I added to make the system more user friendly, as well as better data protection
+- **What worked:** Building the customer and technician flows was straightforward, though refining the interface took time. The sign-in is only a local prototype simulation; it does not provide real authentication or server-side account protection.
 - **What broke, and how we fixed it:** I figured out what went wrong with the code and tested it multiple times to make sure it worked
 - **Committed?** yes — related commit: `Simplify booking flow and add customizable technician search filters` (`f07dff6`)
 ---
@@ -50,27 +50,41 @@ Copy this block for each session.
 - **Key prompts we gave Copilot** (paste the important ones):
   1. add a privacy control center under setting, to view View stored account information.
   2. add allow or disallow notifications for all parties who use this app
-- **What worked:** the sign in page
-- **What broke, and how we fixed it:** the sign in page broke and crashed several times due to this change, I asked copilot to undo code that broke the app until I had a competent login/logout system, then kept building it piece by piece, testing everything as I went
+- **What worked:** The local demo sign-in and notification preferences worked after incremental testing.
+- **What broke, and how we fixed it:** The sign-in screen crashed while I was adding account-style privacy settings and notification controls. I reverted the changes that caused problems, then rebuilt and tested the local demo sign-in in smaller steps.
 - **Committed?** yes — related commit: `Update PROJECT_LOG.md` (`7c5b1ca`)
 ---
 
 ### Session — [11/27] — driver: [Riley]
 
-- **Goal for this session:** Use GitHub Pages for the live static prototype.
-- **What worked:** GitHub Pages built and deployed the site from the main branch. The app uses a local demo sign-in and stores requests in the browser.
+- **Goal for this session:** Publish the static prototype on GitHub Pages and test its local demo flows.
+- **What worked:** GitHub Pages built and deployed the site from the `main` branch. The static app stores requests, quotes, ratings, and simulated completion records in this browser's local storage. In **Provide services**, the user can select a fictional technician and see requests assigned to that technician; the app filters requests by technician ID. This simulates separate technician identities in one browser, but it is not account authentication or access control.
 - **What broke, and how we fixed it:** Notification preference controls could turn off when browser notifications were unavailable. The preferences were updated to save and show in-app updates instead.
-- **Committed?** yes — related commits: `Remove runtime add-ons from static site` (`375472b`), `Add reusable local demo sign-in` (`4afe4a1`), and `Fix notification preferences on mobile` (`9a95f1a`)
+- **Committed?** yes — the final GitHub Pages version was developed through the commits listed below.
 ---
+
+### Selected commits for the final GitHub Pages version
+
+| Commit | Change |
+|---|---|
+| `5e9e69c` | Added technician repair requests. |
+| `375472b` | Removed runtime add-ons so the site could run as a static page. |
+| `4afe4a1` | Added reusable local demo sign-in. |
+| `223cd46` | Simplified demo access and aligned notification options. |
+| `205cb48` | Added a warning to use fictional information in the repair request form. |
+| `792953d` | Adjusted notification checkbox layout. |
+| `149df52` | Pinned the footer to the bottom of the screen. |
+| `9a95f1a` | Fixed notification preferences on mobile. |
+| `47f6c6e` | Added technician selection so requests can be filtered by assigned technician. |
 
 ## Things that broke (running list)
 
 | Date | What went wrong | What we tried | What finally fixed it |
 |---|---|---|---|
-|11/24|formatting issues at the start | Copilot was asked to design the app with a simple but efficient look. | copilot had developed exactly what I was looking for |
-|11/24|the app crashed a lot|I went on render and tried adding variables to the deployment|this fixed the deployment issue as I now had the correct code|
-|11/26|the sign in page broke and locked me out of the app| was trying to add a 2nd password protected wall for security| playing around with copilot eventually led me to fixing the login screen.|
-|11/26|The login and logout screen became unusable due to coding errors by copilot while polishing the account database feature| this led to me running out of free AI use to help with the finishing touches on my app|reported to professor via email but undoubtedly, a huge issue.|
+| 11/24 | The initial layout needed refinement to match the planned customer and technician flows. | Described the navigation, listings, filters, booking, and quotes in the prompts, then reviewed the preview. | Iterated on the prototype and checked that the main screens matched the intended flow. |
+| 11/25 | The Render deployment failed while its environment variables were misconfigured. | Reviewed the deployment errors and Render settings. | Corrected the environment variables and redeployed the app. |
+| 11/26 | The sign-in screen became unreliable while I was adding account-style privacy settings and notification controls. | Reverted changes that caused crashes and retested the sign-in flow in smaller steps. | Kept the final sign-in as a simple local demo gate; it is not real authentication. |
+| 11/27 | Notification preferences did not work as expected when browser notifications were unavailable. | Tested the preferences without relying on browser alerts. | Saved the preferences and used in-app updates when browser notifications were unavailable. |
 ---
 
 ## What a real version would need
@@ -79,8 +93,8 @@ The current GitHub Pages prototype uses a local demo gate and browser storage; i
 
 | Feature we faked or skipped | Why a real company would need it | How hard / expensive? |
 |---|---|---|
-| Real authentication and access control | The current sign-in is only a local demo gate. A real service needs protected accounts and server-side authorization so customers and technicians can access only the data and actions appropriate to their roles. | Moderate to high effort, with ongoing provider and security-maintenance costs. A third-party sign-in provider can help, but does not replace authorization or broader security work. |
-| Shared backend and database | Requests, quotes, bookings, and account data need to stay consistent and be available to the customer and technician across devices. | Moderate to high effort. It requires a hosted backend, access controls, backups, monitoring, and ongoing maintenance. |
+| Real authentication and access control | The current sign-in is only a local demo gate. In **Provide services**, anyone using the browser can select a fictional technician; requests are tagged with a technician ID and filtered by that ID. This simulates separate identities but is not secure authentication or access control. A real service needs protected accounts and server-side authorization so customers and technicians can access only the data and actions appropriate to their roles. | Moderate to high effort, with ongoing provider and security-maintenance costs. A third-party sign-in provider can help, but does not replace authorization or broader security work. |
+| Shared backend and database | The prototype stores requests and related updates in this browser only. A real service needs requests, quotes, bookings, and account data to stay consistent and be available to customers and technicians across devices. | Moderate to high effort. It requires a hosted backend, access controls, backups, monitoring, and ongoing maintenance. |
 | Payment processing | If the business charges booking fees, it needs a payment provider to collect them and record payment status. The business would also need processes for refunds, disputes, and any technician payouts. The prototype does not process payments or store card details. | Moderate to high effort to integrate and test. The provider charges transaction fees, and the business needs clear payment and refund policies. |
 | Notifications and customer support | Customers and technicians need timely updates about requests, quotes, and booking changes, plus a way to get help or report problems. | Moderate effort to integrate email or text services; usage may have recurring costs. Support and moderation also require ongoing staff time. |
 | Technician verification and marketplace moderation | Customers need trustworthy listings. A real service would need a process for checking relevant identity or qualifications, handling reports, and responding to disputes; exact checks depend on location and service scope. | High ongoing effort and cost because checks, moderation, and dispute handling require staff and may involve third-party services. |
