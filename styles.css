@@ -22,6 +22,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-size: 1.2rem; font-weight: 850; letter-spacing: -.04em; }
 .brand-mark { display: inline-grid; place-items: center; width: 35px; height: 35px; border-radius: 12px 12px 12px 4px; background: var(--brand); color: white; }
 .header-note { color: var(--muted); font-size: .85rem; }
+.auth-status { color: var(--brand-dark); font-size: .8rem; font-weight: 700; }
 main { max-width: 930px; min-height: 590px; margin: 0 auto; padding: clamp(28px, 5vw, 54px) clamp(18px, 5vw, 48px) 118px; }
 h1, h2, h3, p { margin-top: 0; }
 h1, h2, h3 { line-height: 1.2; letter-spacing: -.035em; }
@@ -106,6 +107,8 @@ input::placeholder, textarea::placeholder { color: #a49a96; }
 .availability-detail { margin: 18px 0; padding: 13px; border-radius: 10px; background: #fff4ed; color: #70504a; }
 .profile-card .button { margin-top: 10px; }
 .form-card { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 760px; padding: clamp(20px, 4vw, 32px); }
+.signin-card { max-width: 600px; }
+.signin-card .form-note { line-height: 1.7; }
 .wide-field { grid-column: 1 / -1; }
 .form-card > .button, .form-card > .form-note, .form-card > .form-status { grid-column: 1 / -1; justify-self: start; }
 .form-note, .form-status { margin: 0; }

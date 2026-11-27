@@ -13,8 +13,22 @@
     <header class="site-header">
       <a class="brand" href="#home" aria-label="FixerUpper home"><span class="brand-mark" aria-hidden="true">F</span><span>FixerUpper</span></a>
       <span class="header-note">Local appliance repair, made simpler</span>
+      <span class="auth-status" id="auth-status" role="status" aria-live="polite" hidden></span>
+      <button class="button secondary" id="signout-button" type="button" hidden>Sign out</button>
     </header>
     <main>
+      <section id="signin" class="signin-view" data-view hidden>
+        <div class="page-heading"><p class="eyebrow">Demo access</p><h1>Sign in to FixerUpper</h1><p class="lead">Use the fixed demo details below. You can sign out and sign back in with them any time.</p></div>
+        <form class="form-card signin-card" id="signin-form">
+          <label>Username<input name="username" required autocomplete="username" value="demo-user"></label>
+          <label>Email<input name="email" type="email" required autocomplete="email" value="demo@fixerupper.test"></label>
+          <label class="wide-field">Password<input name="password" type="password" required autocomplete="current-password" value="demo-access"></label>
+          <button class="button" type="submit">Sign in <span aria-hidden="true">→</span></button>
+          <p class="form-note">Demo credentials: username <strong>demo-user</strong>, email <strong>demo@fixerupper.test</strong>, password <strong>demo-access</strong>. This is a local demonstration only—not real authentication. No server, email, or session token is used.</p>
+          <p id="signin-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
       <section id="home" data-view>
         <div class="welcome"><p class="eyebrow">A better way to get things working</p><h1>What brings you to FixerUpper?</h1><p class="lead">Customers and technicians can find a technician and request a quote. Technicians can also review requests in this local demo.</p></div>
         <div class="choice-grid">
