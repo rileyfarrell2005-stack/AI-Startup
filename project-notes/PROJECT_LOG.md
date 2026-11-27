@@ -2,7 +2,7 @@
 
 Keep this up to date as you go — a few lines per work session is enough. It's much harder to reconstruct at the end.
 
-**Team name:** Riley Farrell
+**Team name:** Individual Project
 **Startup name:** FixerUpper Appliance Repair
 **Live site link:** https://rileyfarrell2005-stack.github.io/AI-Startup/
 
@@ -21,7 +21,7 @@ Copy this block for each session.
      
 - **What worked:** everything worked well for the opening stage of the project
 - **What broke, and how we fixed it:** had to change some things as I learned how to use the copilot
-- **Committed?** yes
+- **Committed?** yes — related commit: `Build FixerUpper appliance repair marketplace prototype` (`fceaa86`)
 ---
 ### Session — [11/25] — driver: [Riley]
 
@@ -31,7 +31,7 @@ Copy this block for each session.
   2. allow customers to create an account
 - **What worked:** adding the account system was pretty easy but tedious, as there was a lot of components I added to make the system more user friendly, as well as better data protection
 - **What broke, and how we fixed it:** I figured out what went wrong with the code and tested it multiple times to make sure it worked
-- **Committed?** yes
+- **Committed?** yes — related commit: `Simplify booking flow and add customizable technician search filters` (`f07dff6`)
 ---
 ### Session — [11/25] — driver: [Riley]
 
@@ -41,7 +41,7 @@ Copy this block for each session.
   2. can you connect to render and let me know how to fix these coding errors in order to deploy my app.
 - **What worked:** the app successfully launched
 - **What broke, and how we fixed it:** the app failed to launch many times due to errors in variables that I hadn't noticed, but I corrected what it had asked me to do by asking copilot for help. it guided me to the environment variable in the render app and eventually deployed my app and connected it to the internet. the app also locked itself after putting in the 6-digit authentication code so I removed it in favour of keeping the regular authentication
-- **Committed?** yes
+- **Committed?** yes — related commit: `Prepare FixerUpper for Render deployment` (`30c28e3`)
 ---
 
 ### Session — [11/26] — driver: [Riley]
@@ -52,7 +52,15 @@ Copy this block for each session.
   2. add allow or disallown notifications for all parties who use this app
 - **What worked:** the sign in page
 - **What broke, and how we fixed it:** the sign in page broke and crashed several times due to this change, I asked copilot to undo code that broke the app until I had a competent login/logout system, then kept building it piece by piece, testing everything as I went
-- **Committed?** yes
+- **Committed?** yes — related commit: `Update PROJECT_LOG.md` (`7c5b1ca`)
+---
+
+### Session — [11/27] — driver: [Riley]
+
+- **Goal for this session:** Use GitHub Pages for the live static prototype.
+- **What worked:** GitHub Pages built and deployed the site from the main branch. The app uses a local demo sign-in and stores requests in the browser.
+- **What broke, and how we fixed it:** Notification preference controls could turn off when browser notifications were unavailable. The preferences were updated to save and show in-app updates instead.
+- **Committed?** yes — related commits: `Remove runtime add-ons from static site` (`375472b`), `Add reusable local demo sign-in` (`4afe4a1`), and `Fix notification preferences on mobile` (`9a95f1a`)
 ---
 
 ## Things that broke (running list)
@@ -76,14 +84,8 @@ Everything we wanted but faked or left out — real logins, a real database, pay
 | I skipped adding a chat bot into the app due to it not being important for my current project | A real company would need this because it provides an assist answer easier questions about simpler customer/technician thoughts and/or complaints | this would be mildly expensive to add and code to have certain answers |
 | I skipped adding automatic replies to requests due to it being potentially misleading | this is not that important for a real company unless you'd want to make it seem more efficient | this would be easy and inexpensive to add into a project |
 | I skipped adding a way to process real payments | a real company needs to secure funds before an objective is completed | moderately costly to add and connect to a payment provider among other things |
+| Shared cloud database | Customers and technicians need to access the same requests and updates across devices. | Moderately difficult and costly: it would require hosting, secure access controls, backups and ongoing maintenance. |
 ---
-
-## Reflection (fill in at the end)
-
-1. What surprised you most about building software with AI?
-2. Which parts were easy, and which were hard? Why do you think that is?
-3. If a competitor had the same AI tool, how long would it take them to copy your site?
-
 
 ## Reflection
 
