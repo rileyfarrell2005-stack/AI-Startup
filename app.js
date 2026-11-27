@@ -3,6 +3,10 @@
   "use strict";
 
   const STORE_KEY = "fixerupperDemoJobs";
+  const SIGNIN_KEY = "fixerupperDemoSignedIn";
+  const DEMO_USERNAME = "demo-user";
+  const DEMO_EMAIL = "demo@fixerupper.test";
+  const DEMO_PASSWORD = "demo-access";
   const CUSTOMER_FEE = 5;
   const TECHNICIAN_FEE = 5;
   const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: "CAD" });
@@ -21,6 +25,37 @@
       localStorage.setItem(STORE_KEY, JSON.stringify(jobs));
       return true;
     } catch (error) { return false; }
+  }
+  function isSignedIn() {
+    try { return localStorage.getItem(SIGNIN_KEY) === "true"; }
+    catch (error) { return false; }
+  }
+  function showView() {
+    const views = document.querySelectorAll("[data-view]");
+    const signedIn = isSignedIn();
+    const navigation = $(".bottom-nav");
+    const signOut = $("#signout-button");
+    navigation.hidden = !signedIn;
+    signOut.hidden = !signedIn;
+
+    if (!signedIn) {
+      views.forEach(function (view) { view.hidden = view.id !== "signin"; });
+      if (window.location.hash !== "#signin") window.history.replaceState(null, "", "#signin");
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    const requested = (window.location.hash || "#home").slice(1);
+    const validView = Array.prototype.some.call(views, function (view) { return view.id === requested; });
+    const current = validView && requested !== "signin" ? requested : "home";
+    views.forEach(function (view) { view.hidden = view.id !== current; });
+    document.querySelectorAll(".bottom-nav a").forEach(function (tab) {
+      const isCustomerPage = current === "profile" || current === "booking";
+      if (tab.dataset.tab === current || (isCustomerPage && tab.dataset.tab === "services")) tab.setAttribute("aria-current", "page");
+      else tab.removeAttribute("aria-current");
+    });
+    if (window.location.hash !== "#" + current) window.history.replaceState(null, "", "#" + current);
+    window.scrollTo(0, 0);
   }
   function addText(parent, tag, className, value) {
     const node = document.createElement(tag);
@@ -99,19 +134,48 @@
     }
     renderAll();
   }
-  function showView() {
-    const requested = (window.location.hash || "#home").slice(1);
-    const views = document.querySelectorAll("[data-view]");
-    const current = Array.prototype.some.call(views, function (view) { return view.id === requested; }) ? requested : "home";
-    views.forEach(function (view) { view.hidden = view.id !== current; });
-    document.querySelectorAll(".bottom-nav a").forEach(function (tab) {
-      const isCustomerPage = current === "profile" || current === "booking";
-      if (tab.dataset.tab === current || (isCustomerPage && tab.dataset.tab === "services")) tab.setAttribute("aria-current", "page");
-      else tab.removeAttribute("aria-current");
-    });
-    window.scrollTo(0, 0);
-  }
   window.addEventListener("hashchange", showView);
+
+  $("#signin-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!form.reportValidity()) return;
+    const values = new FormData(form);
+    const username = String(values.get("username") || "").trim().toLowerCase();
+    const email = String(values.get("email") || "").trim().toLowerCase();
+    const password = String(values.get("password") || "");
+    const status = $("#signin-status");
+    if (username !== DEMO_USERNAME || email !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
+      status.textContent = "Those demo sign-in details do not match. Use the fixed credentials shown above.";
+      return;
+    }
+    try {
+      localStorage.setItem(SIGNIN_KEY, "true");
+    } catch (error) {
+      status.textContent = "Your browser could not save the demo sign-in state. Enable browser storage and try again.";
+      return;
+    }
+    status.textContent = "";
+    $("#auth-status").textContent = "";
+    $("#auth-status").hidden = true;
+    window.history.replaceState(null, "", "#home");
+    showView();
+  });
+
+  $("#signout-button").addEventListener("click", function () {
+    try {
+      localStorage.removeItem(SIGNIN_KEY);
+    } catch (error) {
+      $("#auth-status").textContent = "Your browser could not clear the demo sign-in state. Try again.";
+      $("#auth-status").hidden = false;
+      return;
+    }
+    $("#signin-status").textContent = "";
+    $("#auth-status").textContent = "";
+    $("#auth-status").hidden = true;
+    window.history.replaceState(null, "", "#signin");
+    showView();
+  });
 
   function populateDateOptions(person) {
     const select = $("#preferred-date");

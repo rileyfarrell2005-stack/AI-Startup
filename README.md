@@ -46,6 +46,10 @@ Next time, go back to **Code → Codespaces** and click the workspace you alread
 
 If you don't see *Show Preview*, wait for the workspace to finish loading, then try again.
 
+The site is plain HTML, CSS and JavaScript: no packages, installs or build steps are needed. You can also open `index.html` directly in a browser.
+
+The sign-in screen is a local demo gate only. Its fixed credentials are visible in the page and do not provide real authentication or account security.
+
 ## Step 4 — Build with Copilot
 
 1. Open the **Chat** panel (the speech-bubble/Copilot icon, top or left side).
