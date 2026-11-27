@@ -50,6 +50,8 @@ The site is plain HTML, CSS and JavaScript: no packages, installs or build steps
 
 The entry screen is a local demo gate only. It does not use passwords or provide real authentication or account security.
 
+After entering the demo, open **Settings / help** to find notification preferences above the help topics. Browser alerts require browser support and permission; otherwise updates appear in the app. Updates work only while the page is open and are limited to this device.
+
 ## Step 4 — Build with Copilot
 
 1. Open the **Chat** panel (the speech-bubble/Copilot icon, top or left side).

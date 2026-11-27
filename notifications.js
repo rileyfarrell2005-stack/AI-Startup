@@ -42,7 +42,7 @@
   panel.appendChild(heading);
   const description = document.createElement("p");
   description.className = "prototype-note";
-  description.textContent = "Choose which app role should receive browser alerts on this device. Allowing alerts may ask your browser for permission.";
+  description.textContent = "Choose which app roles receive updates on this device. Browser alerts may require permission; otherwise updates appear in the app while it is open.";
   panel.appendChild(description);
 
   const preferences = readPreferences();
@@ -67,58 +67,56 @@
   status.setAttribute("aria-live", "polite");
   panel.appendChild(status);
   const firstDetails = settings.querySelector(".settings-list");
-  if (firstDetails) firstDetails.insertAdjacentElement("afterend", panel);
+  if (firstDetails) settings.insertBefore(panel, firstDetails);
   else settings.appendChild(panel);
 
+  const inAppAlert = document.createElement("p");
+  inAppAlert.className = "in-app-notification";
+  inAppAlert.setAttribute("role", "status");
+  inAppAlert.hidden = true;
+  document.querySelector("main").prepend(inAppAlert);
+
   function permissionMessage() {
-    if (!("Notification" in window)) return "Browser notifications are unavailable here. Keep this page open to use app updates.";
-    if (Notification.permission === "denied") return "Notifications are blocked in browser settings. Change site permissions to allow them.";
+    if (!("Notification" in window)) return "Browser alerts are unavailable here. Updates will appear in the app while it is open.";
+    if (Notification.permission === "denied") return "Browser alerts are blocked. Updates will appear in the app while it is open.";
     if (Notification.permission === "granted") return "Browser notifications are allowed on this device.";
-    return "Notifications are off until you enable a role and grant browser permission.";
+    return "Allow browser alerts when prompted, or receive updates in the app while it is open.";
   }
   status.textContent = permissionMessage();
 
   selectors.forEach(function (item) {
     controls[item.role].addEventListener("change", function () {
       const next = readPreferences();
-      if (controls[item.role].checked) {
-        if (!("Notification" in window)) {
-          controls[item.role].checked = false;
-          next[item.role] = false;
-          status.textContent = permissionMessage();
-          return;
-        }
-        if (Notification.permission === "default") {
-          Notification.requestPermission().then(function (permission) {
-            next[item.role] = permission === "granted" && controls[item.role].checked;
-            controls[item.role].checked = next[item.role];
-            if (!savePreferences(next)) status.textContent = "Could not save your notification preference in this browser.";
-            else status.textContent = permissionMessage();
+      const previous = next[item.role];
+      next[item.role] = controls[item.role].checked;
+      if (!savePreferences(next)) {
+        controls[item.role].checked = previous;
+        status.textContent = "Could not save your notification preference in this browser.";
+        return;
+      }
+      status.textContent = permissionMessage();
+      if (next[item.role] && "Notification" in window && Notification.permission === "default") {
+        try {
+          Promise.resolve(Notification.requestPermission()).then(function () {
+            status.textContent = permissionMessage();
           }).catch(function () {
-            controls[item.role].checked = false;
-            next[item.role] = false;
-            savePreferences(next);
-            status.textContent = "Browser permission could not be requested. Check your site settings.";
+            status.textContent = "Browser permission could not be requested. Updates will appear in the app while it is open.";
           });
-          return;
+        } catch (error) {
+          status.textContent = "Browser permission could not be requested. Updates will appear in the app while it is open.";
         }
-        if (Notification.permission !== "granted") {
-          controls[item.role].checked = false;
-          next[item.role] = false;
-          status.textContent = permissionMessage();
-          return;
-        }
-        next[item.role] = true;
-      } else next[item.role] = false;
-
-      if (!savePreferences(next)) status.textContent = "Could not save your notification preference in this browser.";
-      else status.textContent = permissionMessage();
+      }
     });
   });
 
   function sendNotification(role, title, body, destination) {
     const current = readPreferences();
-    if (!current[role] || !("Notification" in window) || Notification.permission !== "granted") return;
+    if (!current[role]) return;
+    if (!("Notification" in window) || Notification.permission !== "granted") {
+      inAppAlert.textContent = title + ": " + body;
+      inAppAlert.hidden = false;
+      return;
+    }
     try {
       const notification = new Notification(title, { body: body, tag: "fixerupper-" + role });
       notification.onclick = function () {
@@ -126,7 +124,11 @@
         if (destination) window.location.hash = destination;
         notification.close();
       };
-    } catch (error) { /* Browser may disallow notifications in this context. */ }
+    } catch (error) {
+      inAppAlert.textContent = title + ": " + body;
+      inAppAlert.hidden = false;
+      status.textContent = "Browser alerts could not be displayed. Updates will appear in the app while it is open.";
+    }
   }
 
   function readJobs() {
